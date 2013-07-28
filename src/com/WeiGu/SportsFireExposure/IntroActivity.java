@@ -32,6 +32,7 @@ public class IntroActivity extends Activity{
 			{
 				Intent myIntent = new Intent(IntroActivity.this, MainActivity.class);
 				IntroActivity.this.startActivity(myIntent);
+				finish();
 			}
 		}, 2000);
 	}
