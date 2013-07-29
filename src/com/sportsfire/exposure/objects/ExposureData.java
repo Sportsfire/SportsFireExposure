@@ -134,12 +134,12 @@ public class ExposureData {
 		return true;
 	}
 	public ArrayList<String> getSquadExposure(String squadID, String date) {
-
+		ArrayList<String> data = new ArrayList<String>();
 		final String where = SquadSessionsTable.KEY_SQUAD_ID + " = '" + squadID + "' and "
 				+ SquadSessionsTable.KEY_SEASON_ID + " = '" + seasonID + "' and " + SquadSessionsTable.KEY_DATE
 				+ " = strftime('%w-%W','" + date + "')";
 
-		String[] projection = { SquadSessionsTable.KEY_ID };
+		String[] projection = { SquadSessionsTable.KEY_SESSION, SquadSessionsTable.KEY_DURATION, SquadSessionsTable.KEY_TYPE};
 		cursor = content.query(Provider.CONTENT_URI_SQUAD_SESSIONS, projection, where, null, null);
 
 		ContentValues values = new ContentValues();
@@ -149,13 +149,14 @@ public class ExposureData {
 		}else{
 			for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 				try {
-					data = cursor.getDouble(0);
+					data.add(cursor.getString(0));
 				} catch (Exception e) {
 				}
 
 			}
 			
 		}
+		return data;
 	}
 
 }
