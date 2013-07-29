@@ -1,5 +1,7 @@
 package com.sportsfire.exposure;
 
+import com.WeiGu.SporysFireExposure.R;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
