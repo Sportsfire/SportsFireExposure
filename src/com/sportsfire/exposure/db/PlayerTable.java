@@ -1,4 +1,4 @@
-package com.WeiGu.SportsFireExposure.db;
+package com.sportsfire.exposure.db;
 
 import android.database.sqlite.*;
 import android.util.Log;

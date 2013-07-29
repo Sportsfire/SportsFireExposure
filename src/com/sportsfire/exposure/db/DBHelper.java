@@ -1,4 +1,4 @@
-package com.WeiGu.SportsFireExposure.db;
+package com.sportsfire.exposure.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -63,8 +63,9 @@ public class DBHelper extends SQLiteOpenHelper {
 		SquadTable.onCreate(db);
 		SeasonTable.onCreate(db);
 		PlayerTable.onCreate(db);
-		ScreeningValuesTable.onCreate(db);
-		ScreeningUpdatesTable.onCreate(db);
+		SquadSessionsTable.onCreate(db);
+		PlayerSessionsTable.onCreate(db);
+		UpdatesTable.onCreate(db);
 	}
 
 	@Override
@@ -72,8 +73,9 @@ public class DBHelper extends SQLiteOpenHelper {
 		SquadTable.onUpgrade(db, oldVersion, newVersion);
 		SeasonTable.onUpgrade(db, oldVersion, newVersion);
 		PlayerTable.onUpgrade(db, oldVersion, newVersion);
-		ScreeningValuesTable.onUpgrade(db, oldVersion, newVersion);
-		ScreeningUpdatesTable.onUpgrade(db, oldVersion, newVersion);
+		SquadSessionsTable.onUpgrade(db, oldVersion, newVersion);
+		PlayerSessionsTable.onUpgrade(db, oldVersion, newVersion);
+		UpdatesTable.onUpgrade(db, oldVersion, newVersion);
 	}
 
 	@Override

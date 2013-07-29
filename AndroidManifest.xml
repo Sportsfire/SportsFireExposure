@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.WeiGu.SporysFireExposure"
+    package="com.sportsfire.exposure"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.WeiGu.SportsFireExposure.IntroActivity"
+            android:name="com.sportsfire.exposure.IntroActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,31 +25,31 @@
         </activity>
         
         <activity
-            android:name="com.WeiGu.SportsFireExposure.MainActivity"
+            android:name="com.sportsfire.exposure.MainActivity"
             android:label="@string/title_activity_main" >
         </activity>
         
          <activity
-            android:name="com.WeiGu.SportsFireExposure.SportsFireExposure"
+            android:name="com.sportsfire.exposure.SportsFireExposure"
             android:label="@string/title_activity_main" >
         </activity>
        
          <activity
-            android:name="com.WeiGu.SportsFireExposure.Quit"
+            android:name="com.sportsfire.exposure.Quit"
             android:label="@string/Quit" >
         </activity>
         <activity
-            android:name="com.WeiGu.SportsFireExposure.Quiz"
+            android:name="com.sportsfire.exposure.Quiz"
             android:label="@string/Quit"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="com.WeiGu.SportsFireExposure.About"
+            android:name="com.sportsfire.exposure.About"
             android:label="@string/Quit"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="com.WeiGu.SportsFireExposure.Timer"
+            android:name="com.sportsfire.exposure.Timer"
             android:label="@string/Timer"
             >
         </activity>

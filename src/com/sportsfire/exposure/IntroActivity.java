@@ -1,17 +1,12 @@
-package com.WeiGu.SportsFireExposure;
+package com.sportsfire.exposure;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
-import com.WeiGu.SporysFireExposure.R;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 

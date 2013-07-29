@@ -1,4 +1,4 @@
-package com.WeiGu.SportsFireExposure;
+package com.sportsfire.exposure;
 
 import java.io.Closeable;
 
