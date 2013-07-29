@@ -17,4 +17,8 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="Theme.fly2think" parent="android:style/Theme.Holo.Light.Dialog">
+        <item name="android:windowBackground">@drawable/bg</item>
+    </style>
+
 </resources>

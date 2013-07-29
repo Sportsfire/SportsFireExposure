@@ -10,6 +10,7 @@
         android:layout_alignRight="@+id/button1"
         android:layout_below="@+id/button1"
         android:layout_marginTop="29dp"
+        android:onClick="ButtonOnClick"
         android:text="Player" />
 
     <Button
@@ -28,6 +29,7 @@
         android:layout_alignLeft="@+id/textView1"
         android:layout_below="@+id/textView1"
         android:layout_marginTop="37dp"
+        android:onClick="ButtonOnClick"
         android:text="Team" />
 
     <Button
