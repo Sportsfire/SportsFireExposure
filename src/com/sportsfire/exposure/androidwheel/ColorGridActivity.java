@@ -1,6 +1,5 @@
-package com.WeiGu.androidwheel;
-
-import com.WeiGu.SporysFireExposure.R;
+package com.sportsfire.exposure.androidwheel;
+import com.sportsfire.exposure.R;
 
 import android.app.Activity;
 import android.content.Intent;

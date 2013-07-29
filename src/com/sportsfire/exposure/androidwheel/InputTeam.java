@@ -1,9 +1,9 @@
-package com.WeiGu.androidwheel;
+package com.sportsfire.exposure.androidwheel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.WeiGu.SporysFireExposure.R;
+import com.sportsfire.exposure.R;
 
 import android.os.Bundle;
 import android.app.Activity;

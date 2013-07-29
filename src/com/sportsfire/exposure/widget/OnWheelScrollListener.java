@@ -1,5 +1,5 @@
 
-package com.WeiGu.widget;
+package com.sportsfire.exposure.widget;
 
 /**
  * Wheel scrolled listener interface.

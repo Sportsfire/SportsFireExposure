@@ -1,4 +1,4 @@
-package com.WeiGu.widget;
+package com.sportsfire.exposure.widget;
 
 /**
  * The simple Array wheel adapter

@@ -1,5 +1,6 @@
 package com.sportsfire.exposure;
 
+
 import java.io.Closeable;
 
 import android.app.Activity;

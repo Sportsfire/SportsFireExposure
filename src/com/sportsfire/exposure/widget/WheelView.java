@@ -1,10 +1,10 @@
 
-package com.WeiGu.widget;
+package com.sportsfire.exposure.widget;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import com.WeiGu.SporysFireExposure.R;
+import com.sportsfire.exposure.R;
 
 import android.content.Context;
 import android.graphics.Canvas;

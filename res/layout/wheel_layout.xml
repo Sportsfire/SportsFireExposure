@@ -14,7 +14,7 @@
         android:paddingRight="12dp"
         android:paddingTop="10dp" >
 
-        <com.WeiGu.widget.WheelView
+        <com.sportsfire.exposure.widget.WheelView
             android:id="@+id/mins"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
