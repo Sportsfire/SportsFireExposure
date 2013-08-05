@@ -1,5 +1,7 @@
 package com.sportsfire.exposure.db;
 
+import com.sportsfire.db.PlayerTable;
+
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 

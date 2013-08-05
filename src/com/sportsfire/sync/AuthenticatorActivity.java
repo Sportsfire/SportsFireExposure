@@ -14,9 +14,10 @@
  * the License.
  */
 
-package com.sportsfire.exposure.sync;
+package com.sportsfire.sync;
 
 import com.sportsfire.exposure.R;
+import com.sportsfire.exposure.sync.ExposureProvider;
 
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
@@ -29,14 +30,13 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
-import static com.sportsfire.exposure.sync.Constants.*;
+import static com.sportsfire.sync.Constants.*;
 /**
  * Activity which displays login screen to the user.
  */
@@ -198,7 +198,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
             mAccountManager.setAuthToken(account, AUTHTOKEN_TYPE, authToken);
             mAccountManager.setUserData(account, AccountManager.KEY_USERDATA, userData);
             // Set contacts sync for this account.
-            ContentResolver.setSyncAutomatically(account, Provider.AUTHORITY, true);
+            if (ContentResolver.getIsSyncable(account, Provider.AUTHORITY)>0){
+                ContentResolver.setSyncAutomatically(account, Provider.AUTHORITY, true);
+            }
         } else {
             mAccountManager.setPassword(account, mPassword);
         }

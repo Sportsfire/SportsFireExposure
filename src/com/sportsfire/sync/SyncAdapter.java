@@ -1,14 +1,12 @@
-package com.sportsfire.exposure.sync;
+package com.sportsfire.sync;
 
-import static com.sportsfire.exposure.sync.Constants.AUTHTOKEN_TYPE;
+import static com.sportsfire.sync.Constants.AUTHTOKEN_TYPE;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -21,26 +19,15 @@ import org.apache.http.ParseException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.params.ConnManagerParams;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.SingleClientConnManager;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import com.sportsfire.exposure.db.PlayerTable;
-import com.sportsfire.exposure.db.SeasonTable;
-import com.sportsfire.exposure.db.SquadTable;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -53,12 +40,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SyncResult;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Base64;
 import android.util.Log;
+
+import com.sportsfire.db.PlayerTable;
+import com.sportsfire.db.SeasonTable;
+import com.sportsfire.db.SquadTable;
 
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
 	private AccountManager mAccountManager;
@@ -111,13 +100,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	private String getBasicAuthString() throws Exception {
-		final AccountManager am = AccountManager.get(context);
-		String authToken = am.blockingGetAuthToken(account, AUTHTOKEN_TYPE, true);
-		String s = am.getUserData(account, AccountManager.KEY_USERDATA) + ":" + authToken;
-		return "Basic " + Base64.encodeToString(s.getBytes(), Base64.URL_SAFE);
 	}
 
 	public SyncAdapter(Context context, boolean autoInitialize) {
@@ -268,7 +250,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 					JSONObject object = serverSeasons.getJSONObject(i);
 					values.put(SeasonTable.KEY_SEASON_ID, object.getString("_id"));
 					values.put(SeasonTable.KEY_SEASON_NAME, object.getString("name"));
-
+					values.put(SeasonTable.KEY_START_DATE, object.getString("startdate"));
 					resultsList.add(values);
 				}
 				return resultsList;

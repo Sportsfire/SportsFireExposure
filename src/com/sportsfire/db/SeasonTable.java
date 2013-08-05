@@ -1,4 +1,5 @@
-package com.sportsfire.exposure.db;
+package com.sportsfire.db;
+
 
 import android.database.sqlite.*;
 import android.util.Log;
@@ -11,11 +12,14 @@ public class SeasonTable {
 	// Squad Table Keys
 	public static final String KEY_SEASON_ID = "_id"; // Primary key
 	public static final String KEY_SEASON_NAME = "seasonname";
-
+	public static final String KEY_START_DATE = "startdate";
+	
 	public static void onCreate(SQLiteDatabase db) {
-		String createSquadTable = "CREATE TABLE " + TABLE_NAME + "(" + KEY_SEASON_ID + " INTEGER PRIMARY KEY NOT NULL,"
-				+ KEY_SEASON_NAME + " TEXT NOT NULL" + ")";
-
+		String createSquadTable = "CREATE TABLE " + TABLE_NAME + 
+				"(" + KEY_SEASON_ID + " INTEGER PRIMARY KEY NOT NULL,"
+				+ KEY_SEASON_NAME + " TEXT NOT NULL," 
+				+ KEY_START_DATE + " TEXT" + ")";
+		Log.w(KEY_START_DATE, createSquadTable);
 		db.execSQL(createSquadTable);
 	}
 

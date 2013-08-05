@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.sportsfire.exposure.sync;
+package com.sportsfire.sync;
 
 import android.app.Service;
 import android.content.Intent;

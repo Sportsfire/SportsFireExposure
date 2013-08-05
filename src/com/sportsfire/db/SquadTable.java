@@ -1,4 +1,4 @@
-package com.sportsfire.exposure.db;
+package com.sportsfire.db;
 
 
 import android.database.sqlite.*;

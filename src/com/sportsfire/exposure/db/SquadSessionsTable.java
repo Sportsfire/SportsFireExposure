@@ -1,5 +1,7 @@
 package com.sportsfire.exposure.db;
 
+import com.sportsfire.db.PlayerTable;
+
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -8,6 +10,7 @@ public class SquadSessionsTable {
 	public static final String TABLE_NAME = "squadsessions";
 	// Players Table Keys
 	public static final String KEY_ID = "_id"; // Primary key
+	public static final String KEY_NUMBER = "number"; // Primary key
 	public static final String KEY_DATE = "date";
 	public static final String KEY_DURATION = "duration";
 	public static final String KEY_TYPE = "type";
@@ -18,6 +21,7 @@ public class SquadSessionsTable {
 	public static void onCreate(SQLiteDatabase db) {
 		String createValuesTable = "CREATE TABLE " 
 				+ TABLE_NAME + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+				+ KEY_NUMBER + " TEXT,"
 				+ KEY_DATE + " TEXT NOT NULL,"
 				+ KEY_DURATION + " INTEGER," 
 				+ KEY_TYPE + " TEXT,"

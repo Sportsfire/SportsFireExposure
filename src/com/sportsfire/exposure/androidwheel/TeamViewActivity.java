@@ -26,9 +26,8 @@ import android.widget.TextView;
 
 public class TeamViewActivity extends Activity implements OnClickListener,
 		OnLongClickListener {
-
-	private String[] strs = { "S\n7", "M\n8", "T\n9", "W\n10", "Th\n11",
-			"F\n12", "S\n13" };
+	public static final String ARG_DATES = "argumentDates";
+	private ArrayList<String> dates;
 	private int item_ids[] = { R.id.item1, R.id.item2,
 			R.id.item3, R.id.item4, R.id.item5, R.id.item6,
 			R.id.item7, R.id.item8, R.id.item9,
@@ -41,7 +40,7 @@ public class TeamViewActivity extends Activity implements OnClickListener,
 	private List<TextView> texts1 = new ArrayList<TextView>();
 	private List<TextView> texts2 = new ArrayList<TextView>();
 	private List<TextView> texts3 = new ArrayList<TextView>();
-	private List<Boolean> isLongClickeds = new ArrayList<Boolean>();
+	private List<Integer> isLongClickeds = new ArrayList<Integer>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class TeamViewActivity extends Activity implements OnClickListener,
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.team_view_layout);
-
+		dates = getIntent().getStringArrayListExtra(ARG_DATES);
 		initItems();
 
 		Button btn_ok = (Button) findViewById(R.id.btn_allok);
@@ -80,10 +79,9 @@ public class TeamViewActivity extends Activity implements OnClickListener,
 					images2[i] = ((ColorDrawable) colors2.get(i)
 							.getBackground()).getColor();
 				}
-				boolean[] longClickeds = new boolean[isLongClickeds.size()];
+				int[] longClickeds = new int[isLongClickeds.size()];
 				for (int i = 0; i < isLongClickeds.size(); i++) {
-
-					longClickeds[i] = isLongClickeds.get(i).booleanValue();
+					longClickeds[i] = isLongClickeds.get(i);
 				}
 				Intent intent = new Intent();
 				intent.putExtra(Constants.TIMES1, times1);
@@ -110,11 +108,11 @@ public class TeamViewActivity extends Activity implements OnClickListener,
 				iv.setOnLongClickListener(this);
 				this.registerForContextMenu(iv);
 				colors1.add(iv);
-				isLongClickeds.add(false);
+				isLongClickeds.add(0);
 
 				TextView tv_day = (TextView) findViewById(item_ids[j])
 						.findViewById(R.id.tv_weekday);
-				tv_day.setText(strs[j / 2]);
+				tv_day.setText(dates.get(j / 2));
 
 				TextView tv_time = (TextView) findViewById(item_ids[j])
 						.findViewById(R.id.tv_time);
@@ -247,6 +245,7 @@ public class TeamViewActivity extends Activity implements OnClickListener,
 
 		menu.add(0, 1, 0, "SPLIT");
 		menu.add(0, 2, 0, "DOUBLE");
+		menu.add(0, 3, 0, "SINGLE");
 	}
 
 	@Override
@@ -256,19 +255,35 @@ public class TeamViewActivity extends Activity implements OnClickListener,
 		switch (item.getItemId()) {
 		case 1:
 			str = "S\nP";
+			for (int i = 0; i < colors1.size(); i++) {
+				if (clickedView.equals(colors1.get(i))) {
+					layouts.get(i).setVisibility(View.VISIBLE);
+					isLongClickeds.set(i, 1);
+					texts3.get(i).setText(str);
+				}
+			}
 			break;
 		case 2:
 			str = "D\nO";
+			for (int i = 0; i < colors1.size(); i++) {
+				if (clickedView.equals(colors1.get(i))) {
+					layouts.get(i).setVisibility(View.VISIBLE);
+					isLongClickeds.set(i, 2);
+					texts3.get(i).setText(str);
+				}
+			}
 			break;
-		}
-
-		for (int i = 0; i < colors1.size(); i++) {
-			if (clickedView.equals(colors1.get(i))) {
-				layouts.get(i).setVisibility(View.VISIBLE);
-				isLongClickeds.set(i, true);
-				texts3.get(i).setText(str);
+		case 3:
+			for (int i = 0; i < colors1.size(); i++) {
+				if (clickedView.equals(colors1.get(i))) {
+					isLongClickeds.set(i, 0);
+					layouts.get(i).setVisibility(View.GONE);
+					return true;
+				}
 			}
 		}
+
+		
 
 		return true;
 	}

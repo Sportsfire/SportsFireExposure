@@ -1,4 +1,8 @@
-package com.sportsfire.exposure.db;
+package com.sportsfire.db;
+
+import com.sportsfire.exposure.db.PlayerSessionsTable;
+import com.sportsfire.exposure.db.SquadSessionsTable;
+import com.sportsfire.exposure.db.UpdatesTable;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,7 +16,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	private static final int DB_VERSION = 4;
 
 	// Database Name
-	private static final String DB_NAME = "sportsfire";
+	private static final String DB_NAME = "exposure";
 
 	private SQLiteDatabase db = null;
 
