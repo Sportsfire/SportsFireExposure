@@ -1,5 +1,5 @@
 
-package com.sportsfire.exposure.widget;
+package com.WeiGu.widget;
 
 /**
  * Wheel changed listener interface.

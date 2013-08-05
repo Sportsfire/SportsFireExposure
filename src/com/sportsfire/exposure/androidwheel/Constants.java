@@ -1,4 +1,4 @@
-package com.sportsfire.exposure.androidwheel;
+package com.WeiGu.androidwheel;
 
 public class Constants {
 
@@ -14,5 +14,6 @@ public class Constants {
 	public static final String COLORS22 = "colors22";
 	public static final String COLORS23 = "colors23";
 	public static final String ISLONGCLICKEDS = "isLongClickeds";
+	public static final int SIZE = 7;
 
 }

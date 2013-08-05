@@ -1,9 +1,9 @@
-package com.sportsfire.exposure.androidwheel;
+package com.WeiGu.androidwheel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sportsfire.exposure.R;
+import com.WeiGu.SporysFireExposure.R;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -20,7 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-public class InputTeam extends Activity implements OnClickListener {
+public class TeamMainActivity extends Activity implements OnClickListener {
 
 	private final int REQUESTCODE1 = 0x01;
 	private final int REQUESTCODE2 = 0x02;
@@ -48,7 +48,7 @@ public class InputTeam extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.inputteam);
+		setContentView(R.layout.team_layout);
 
 		myApp = (MyApp) getApplication();
 
@@ -231,29 +231,49 @@ public class InputTeam extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK) {
+			
+			ArrayList<TeamDayBean> days1 = data
+					.getParcelableArrayListExtra("days1");
+			ArrayList<TeamDayBean> days2 = data
+					.getParcelableArrayListExtra("days2");
 
 			if (requestCode == REQUESTCODE1) {
-				String[] times1 = data.getStringArrayExtra(Constants.TIMES1);
-				for (int i = 0; i < times1.length; i++) {
-					texts1.get(i).setText(times1[i]);
+				
+
+				for (int i = 0; i < Constants.SIZE; i++) {
+					TeamDayBean day = days1.get(i);
+					colors1.get(i).setBackgroundColor(day.getColor());
+					texts1.get(i).setText(day.getTime());
 				}
-				int[] images1 = data.getIntArrayExtra(Constants.COLORS11);
-				for (int i = 0; i < images1.length; i++) {
-					colors1.get(i).setBackgroundColor(images1[i]);
+
+				for (int i = 0; i < Constants.SIZE; i++) {
+					TeamDayBean day = days2.get(i);
+					texts3.get(i).setText(day.getWd());
+					colors2.get(i).setBackgroundColor(day.getColor());
+					texts2.get(i).setText(day.getTime());
 				}
-				String[] times2 = data.getStringArrayExtra(Constants.TIMES2);
-				for (int i = 0; i < times2.length; i++) {
-					texts2.get(i).setText(times2[i]);
-				}
-				int[] images2 = data.getIntArrayExtra(Constants.COLORS21);
-				for (int i = 0; i < images2.length; i++) {
-					colors2.get(i).setBackgroundColor(images2[i]);
-				}
-				String[] days = data.getStringArrayExtra(Constants.DAYS);
-				for (int i = 0; i < days.length; i++) {
-					texts3.get(i).setText(days[i]);
-					System.out.println(days[i]);
-				}
+				
+//				String[] times1 = data.getStringArrayExtra(Constants.TIMES1);
+//				for (int i = 0; i < times1.length; i++) {
+//					texts1.get(i).setText(times1[i]);
+//				}
+//				int[] images1 = data.getIntArrayExtra(Constants.COLORS11);
+//				for (int i = 0; i < images1.length; i++) {
+//					colors1.get(i).setBackgroundColor(images1[i]);
+//				}
+//				String[] times2 = data.getStringArrayExtra(Constants.TIMES2);
+//				for (int i = 0; i < times2.length; i++) {
+//					texts2.get(i).setText(times2[i]);
+//				}
+//				int[] images2 = data.getIntArrayExtra(Constants.COLORS21);
+//				for (int i = 0; i < images2.length; i++) {
+//					colors2.get(i).setBackgroundColor(images2[i]);
+//				}
+//				String[] days = data.getStringArrayExtra(Constants.DAYS);
+//				for (int i = 0; i < days.length; i++) {
+//					texts3.get(i).setText(days[i]);
+//					System.out.println(days[i]);
+//				}
 				boolean[] longClickeds = data
 						.getBooleanArrayExtra(Constants.ISLONGCLICKEDS);
 				for (int i = 0; i < longClickeds.length; i++) {
@@ -267,26 +287,39 @@ public class InputTeam extends Activity implements OnClickListener {
 				}
 			} else if (requestCode == REQUESTCODE2) {
 
-				String[] times1 = data.getStringArrayExtra(Constants.TIMES1);
-				for (int i = 7; i < 7 + times1.length; i++) {
-					texts1.get(i).setText(times1[i - 7]);
+				for (int i = 7; i < 7 + Constants.SIZE; i++) {
+					TeamDayBean day = days1.get(i - 7);
+					colors1.get(i).setBackgroundColor(day.getColor());
+					texts1.get(i).setText(day.getTime());
 				}
-				int[] images1 = data.getIntArrayExtra(Constants.COLORS11);
-				for (int i = 7; i < 7 + images1.length; i++) {
-					colors1.get(i).setBackgroundColor(images1[i - 7]);
+
+				for (int i = 7; i < 7 + Constants.SIZE; i++) {
+					TeamDayBean day = days2.get(i - 7);
+					texts3.get(i).setText(day.getWd());
+					colors2.get(i).setBackgroundColor(day.getColor());
+					texts2.get(i).setText(day.getTime());
 				}
-				String[] times2 = data.getStringArrayExtra(Constants.TIMES2);
-				for (int i = 7; i < 7 + times2.length; i++) {
-					texts2.get(i).setText(times2[i - 7]);
-				}
-				int[] images2 = data.getIntArrayExtra(Constants.COLORS21);
-				for (int i = 7; i < 7 + images2.length; i++) {
-					colors2.get(i).setBackgroundColor(images2[i - 7]);
-				}
-				String[] days = data.getStringArrayExtra(Constants.DAYS);
-				for (int i = 7; i < 7 + days.length; i++) {
-					texts3.get(i).setText(days[i - 7]);
-				}
+
+//				String[] times1 = data.getStringArrayExtra(Constants.TIMES1);
+//				for (int i = 7; i < 7 + times1.length; i++) {
+//					texts1.get(i).setText(times1[i - 7]);
+//				}
+//				int[] images1 = data.getIntArrayExtra(Constants.COLORS11);
+//				for (int i = 7; i < 7 + images1.length; i++) {
+//					colors1.get(i).setBackgroundColor(images1[i - 7]);
+//				}
+//				String[] times2 = data.getStringArrayExtra(Constants.TIMES2);
+//				for (int i = 7; i < 7 + times2.length; i++) {
+//					texts2.get(i).setText(times2[i - 7]);
+//				}
+//				int[] images2 = data.getIntArrayExtra(Constants.COLORS21);
+//				for (int i = 7; i < 7 + images2.length; i++) {
+//					colors2.get(i).setBackgroundColor(images2[i - 7]);
+//				}
+//				String[] days = data.getStringArrayExtra(Constants.DAYS);
+//				for (int i = 7; i < 7 + days.length; i++) {
+//					texts3.get(i).setText(days[i - 7]);
+//				}
 				boolean[] longClickeds = data
 						.getBooleanArrayExtra(Constants.ISLONGCLICKEDS);
 				for (int i = 7; i < 7 + longClickeds.length; i++) {
@@ -300,27 +333,40 @@ public class InputTeam extends Activity implements OnClickListener {
 				}
 
 			} else if (requestCode == REQUESTCODE3) {
+				
+				for (int i = 14; i < 14 + Constants.SIZE; i++) {
+					TeamDayBean day = days1.get(i - 14);
+					colors1.get(i).setBackgroundColor(day.getColor());
+					texts1.get(i).setText(day.getTime());
+				}
 
-				String[] times1 = data.getStringArrayExtra(Constants.TIMES1);
-				for (int i = 14; i < 14 + times1.length; i++) {
-					texts1.get(i).setText(times1[i - 14]);
+				for (int i = 14; i < 14 + Constants.SIZE; i++) {
+					TeamDayBean day = days2.get(i - 14);
+					texts3.get(i).setText(day.getWd());
+					colors2.get(i).setBackgroundColor(day.getColor());
+					texts2.get(i).setText(day.getTime());
 				}
-				int[] images1 = data.getIntArrayExtra(Constants.COLORS11);
-				for (int i = 14; i < 14 + images1.length; i++) {
-					colors1.get(i).setBackgroundColor(images1[i - 14]);
-				}
-				String[] times2 = data.getStringArrayExtra(Constants.TIMES2);
-				for (int i = 14; i < 14 + times2.length; i++) {
-					texts2.get(i).setText(times2[i - 14]);
-				}
-				int[] images2 = data.getIntArrayExtra(Constants.COLORS21);
-				for (int i = 14; i < 14 + images2.length; i++) {
-					colors2.get(i).setBackgroundColor(images2[i - 14]);
-				}
-				String[] days = data.getStringArrayExtra(Constants.DAYS);
-				for (int i = 14; i < 14 + days.length; i++) {
-					texts3.get(i).setText(days[i - 14]);
-				}
+
+//				String[] times1 = data.getStringArrayExtra(Constants.TIMES1);
+//				for (int i = 14; i < 14 + times1.length; i++) {
+//					texts1.get(i).setText(times1[i - 14]);
+//				}
+//				int[] images1 = data.getIntArrayExtra(Constants.COLORS11);
+//				for (int i = 14; i < 14 + images1.length; i++) {
+//					colors1.get(i).setBackgroundColor(images1[i - 14]);
+//				}
+//				String[] times2 = data.getStringArrayExtra(Constants.TIMES2);
+//				for (int i = 14; i < 14 + times2.length; i++) {
+//					texts2.get(i).setText(times2[i - 14]);
+//				}
+//				int[] images2 = data.getIntArrayExtra(Constants.COLORS21);
+//				for (int i = 14; i < 14 + images2.length; i++) {
+//					colors2.get(i).setBackgroundColor(images2[i - 14]);
+//				}
+//				String[] days = data.getStringArrayExtra(Constants.DAYS);
+//				for (int i = 14; i < 14 + days.length; i++) {
+//					texts3.get(i).setText(days[i - 14]);
+//				}
 				boolean[] longClickeds = data
 						.getBooleanArrayExtra(Constants.ISLONGCLICKEDS);
 				for (int i = 14; i < 14 + longClickeds.length; i++) {
@@ -334,27 +380,40 @@ public class InputTeam extends Activity implements OnClickListener {
 				}
 
 			} else if (requestCode == REQUESTCODE4) {
+				
+				for (int i = 21; i < 21 + Constants.SIZE; i++) {
+					TeamDayBean day = days1.get(i - 21);
+					colors1.get(i).setBackgroundColor(day.getColor());
+					texts1.get(i).setText(day.getTime());
+				}
 
-				String[] times1 = data.getStringArrayExtra(Constants.TIMES1);
-				for (int i = 21; i < 21 + times1.length; i++) {
-					texts1.get(i).setText(times1[i - 21]);
+				for (int i = 21; i < 21 + Constants.SIZE; i++) {
+					TeamDayBean day = days2.get(i - 21);
+					texts3.get(i).setText(day.getWd());
+					colors2.get(i).setBackgroundColor(day.getColor());
+					texts2.get(i).setText(day.getTime());
 				}
-				int[] images1 = data.getIntArrayExtra(Constants.COLORS11);
-				for (int i = 21; i < 21 + images1.length; i++) {
-					colors1.get(i).setBackgroundColor(images1[i - 21]);
-				}
-				String[] times2 = data.getStringArrayExtra(Constants.TIMES2);
-				for (int i = 21; i < 21 + times2.length; i++) {
-					texts2.get(i).setText(times2[i - 21]);
-				}
-				int[] images2 = data.getIntArrayExtra(Constants.COLORS21);
-				for (int i = 21; i < 21 + images2.length; i++) {
-					colors2.get(i).setBackgroundColor(images2[i - 21]);
-				}
-				String[] days = data.getStringArrayExtra(Constants.DAYS);
-				for (int i = 21; i < 21 + days.length; i++) {
-					texts3.get(i).setText(days[i - 21]);
-				}
+
+//				String[] times1 = data.getStringArrayExtra(Constants.TIMES1);
+//				for (int i = 21; i < 21 + times1.length; i++) {
+//					texts1.get(i).setText(times1[i - 21]);
+//				}
+//				int[] images1 = data.getIntArrayExtra(Constants.COLORS11);
+//				for (int i = 21; i < 21 + images1.length; i++) {
+//					colors1.get(i).setBackgroundColor(images1[i - 21]);
+//				}
+//				String[] times2 = data.getStringArrayExtra(Constants.TIMES2);
+//				for (int i = 21; i < 21 + times2.length; i++) {
+//					texts2.get(i).setText(times2[i - 21]);
+//				}
+//				int[] images2 = data.getIntArrayExtra(Constants.COLORS21);
+//				for (int i = 21; i < 21 + images2.length; i++) {
+//					colors2.get(i).setBackgroundColor(images2[i - 21]);
+//				}
+//				String[] days = data.getStringArrayExtra(Constants.DAYS);
+//				for (int i = 21; i < 21 + days.length; i++) {
+//					texts3.get(i).setText(days[i - 21]);
+//				}
 				boolean[] longClickeds = data
 						.getBooleanArrayExtra(Constants.ISLONGCLICKEDS);
 				for (int i = 21; i < 21 + longClickeds.length; i++) {

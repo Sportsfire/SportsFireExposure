@@ -1,4 +1,6 @@
-package com.sportsfire.exposure;
+package com.WeiGu.SportsFireExposure;
+
+import com.WeiGu.SporysFireExposure.R;
 
 import android.os.Bundle;
 import android.app.Activity;

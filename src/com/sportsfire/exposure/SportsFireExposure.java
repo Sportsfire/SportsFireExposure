@@ -1,4 +1,6 @@
-package com.sportsfire.exposure;
+package com.WeiGu.SportsFireExposure;
+
+import com.WeiGu.SporysFireExposure.R;
 
 import android.content.Intent;
 import android.app.Activity;
@@ -53,11 +55,11 @@ public class SportsFireExposure extends Activity {
 		switch (v.getId()) {
 		case R.id.button1:
 			intent = new Intent(this,
-					com.sportsfire.exposure.androidwheel.InputTeam.class);
+					com.WeiGu.androidwheel.TeamMainActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.button2:
-			intent = new Intent(this,com.sportsfire.exposure.androidwheel.InputPlayer.class);
+			intent = new Intent(this,com.WeiGu.androidwheel.PlayerMainActivity.class);
 			startActivity(intent);
 			break;
 		/*

@@ -1,18 +1,15 @@
-package com.sportsfire.exposure.androidwheel;
+package com.WeiGu.androidwheel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sportsfire.exposure.R;
+import com.WeiGu.SporysFireExposure.R;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.ContextMenu;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -58,42 +55,76 @@ public class TeamViewActivity extends Activity implements OnClickListener,
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				String[] times1 = new String[texts1.size()];
-				for (int i = 0; i < texts1.size(); i++) {
-					times1[i] = texts1.get(i).getText().toString();
+				ArrayList<TeamDayBean> days1 = new ArrayList<TeamDayBean>();
+				ArrayList<TeamDayBean> days2 = new ArrayList<TeamDayBean>();
+				
+				for (int i = 0; i < Constants.SIZE; i++) {
+					TeamDayBean day = new TeamDayBean();
+					day.setColor(((ColorDrawable) colors1.get(i)
+							.getBackground()).getColor());
+					day.setTime(texts1.get(i).getText().toString());
+					days1.add(day);
 				}
-				String[] times2 = new String[texts2.size()];
-				for (int i = 0; i < texts2.size(); i++) {
-					times2[i] = texts2.get(i).getText().toString();
+				
+				for (int i = 0; i < Constants.SIZE; i++) {
+					TeamDayBean day = new TeamDayBean();
+					day.setWd(texts3.get(i).getText().toString());
+					day.setColor(((ColorDrawable) colors2.get(i)
+							.getBackground()).getColor());
+					day.setTime(texts2.get(i).getText().toString());
+					days2.add(day);
 				}
-				String[] days = new String[texts3.size()];
-				for (int i = 0; i < texts3.size(); i++) {
-					days[i] = texts3.get(i).getText().toString();
-				}
-				int images1[] = new int[colors1.size()];
-				for (int i = 0; i < colors1.size(); i++) {
-					images1[i] = ((ColorDrawable) colors1.get(i)
-							.getBackground()).getColor();
-				}
-				int images2[] = new int[colors2.size()];
-				for (int i = 0; i < colors2.size(); i++) {
-					images2[i] = ((ColorDrawable) colors2.get(i)
-							.getBackground()).getColor();
-				}
+				
 				boolean[] longClickeds = new boolean[isLongClickeds.size()];
 				for (int i = 0; i < isLongClickeds.size(); i++) {
 
 					longClickeds[i] = isLongClickeds.get(i).booleanValue();
 				}
+				
 				Intent intent = new Intent();
-				intent.putExtra(Constants.TIMES1, times1);
-				intent.putExtra(Constants.TIMES2, times2);
-				intent.putExtra(Constants.DAYS, days);
-				intent.putExtra(Constants.COLORS11, images1);
-				intent.putExtra(Constants.COLORS21, images2);
+				intent.putParcelableArrayListExtra("days1", days1);
+				intent.putParcelableArrayListExtra("days2", days2);
 				intent.putExtra(Constants.ISLONGCLICKEDS, longClickeds);
 				setResult(RESULT_OK, intent);
 				finish();
+				
+//				String[] times1 = new String[texts1.size()];
+//				for (int i = 0; i < texts1.size(); i++) {
+//					times1[i] = texts1.get(i).getText().toString();
+//				}
+//				String[] times2 = new String[texts2.size()];
+//				for (int i = 0; i < texts2.size(); i++) {
+//					times2[i] = texts2.get(i).getText().toString();
+//				}
+//				String[] days = new String[texts3.size()];
+//				for (int i = 0; i < texts3.size(); i++) {
+//					days[i] = texts3.get(i).getText().toString();
+//				}
+//				int images1[] = new int[colors1.size()];
+//				for (int i = 0; i < colors1.size(); i++) {
+//					images1[i] = ((ColorDrawable) colors1.get(i)
+//							.getBackground()).getColor();
+//				}
+//				int images2[] = new int[colors2.size()];
+//				for (int i = 0; i < colors2.size(); i++) {
+//					images2[i] = ((ColorDrawable) colors2.get(i)
+//							.getBackground()).getColor();
+//				}
+//				boolean[] longClickeds = new boolean[isLongClickeds.size()];
+//				for (int i = 0; i < isLongClickeds.size(); i++) {
+//
+//					longClickeds[i] = isLongClickeds.get(i).booleanValue();
+//				}
+//				Intent intent = new Intent();
+//				intent.putExtra(Constants.TIMES1, times1);
+//				intent.putExtra(Constants.TIMES2, times2);
+//				intent.putExtra(Constants.DAYS, days);
+//				intent.putExtra(Constants.COLORS11, images1);
+//				intent.putExtra(Constants.COLORS21, images2);
+//				intent.putExtra(Constants.ISLONGCLICKEDS, longClickeds);
+//				setResult(RESULT_OK, intent);
+//				finish();
+				
 			}
 		});
 

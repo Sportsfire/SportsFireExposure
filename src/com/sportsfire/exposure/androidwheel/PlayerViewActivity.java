@@ -1,9 +1,9 @@
-package com.sportsfire.exposure.androidwheel;
+package com.WeiGu.androidwheel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sportsfire.exposure.R;
+import com.WeiGu.SporysFireExposure.R;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -62,63 +62,99 @@ public class PlayerViewActivity extends Activity implements OnClickListener,
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				String[] times1 = new String[texts1.size()];
-				for (int i = 0; i < texts1.size(); i++) {
-					times1[i] = texts1.get(i).getText().toString();
+				
+				ArrayList<PlayerDayBean> days1 = new ArrayList<PlayerDayBean>();
+				ArrayList<PlayerDayBean> days2 = new ArrayList<PlayerDayBean>();
+				
+				for (int i = 0; i < Constants.SIZE; i++) {
+					PlayerDayBean day = new PlayerDayBean();
+					day.setColor1(((ColorDrawable) colors11.get(i)
+							.getBackground()).getColor());
+					day.setColor2(((ColorDrawable) colors12.get(i)
+							.getBackground()).getColor());
+					day.setColor3(((ColorDrawable) colors13.get(i)
+							.getBackground()).getColor());
+					day.setTime(texts1.get(i).getText().toString());
+					days1.add(day);
 				}
-				String[] times2 = new String[texts2.size()];
-				for (int i = 0; i < texts2.size(); i++) {
-					times2[i] = texts2.get(i).getText().toString();
+				
+				for (int i = 0; i < Constants.SIZE; i++) {
+					PlayerDayBean day = new PlayerDayBean();
+					day.setWeekday(texts3.get(i).getText().toString());
+					day.setColor1(((ColorDrawable) colors21.get(i)
+							.getBackground()).getColor());
+					day.setColor2(((ColorDrawable) colors22.get(i)
+							.getBackground()).getColor());
+					day.setColor3(((ColorDrawable) colors23.get(i)
+							.getBackground()).getColor());
+					day.setTime(texts2.get(i).getText().toString());
+					days2.add(day);
 				}
-				String[] days = new String[texts3.size()];
-				for (int i = 0; i < texts3.size(); i++) {
-					days[i] = texts3.get(i).getText().toString();
-				}
-				int images11[] = new int[colors11.size()];
-				for (int i = 0; i < colors11.size(); i++) {
-					images11[i] = ((ColorDrawable) colors11.get(i)
-							.getBackground()).getColor();
-				}
-				int images12[] = new int[colors12.size()];
-				for (int i = 0; i < colors12.size(); i++) {
-					images12[i] = ((ColorDrawable) colors12.get(i)
-							.getBackground()).getColor();
-				}
-				int images13[] = new int[colors13.size()];
-				for (int i = 0; i < colors13.size(); i++) {
-					images13[i] = ((ColorDrawable) colors13.get(i)
-							.getBackground()).getColor();
-				}
-				int images21[] = new int[colors21.size()];
-				for (int i = 0; i < colors21.size(); i++) {
-					images21[i] = ((ColorDrawable) colors21.get(i)
-							.getBackground()).getColor();
-				}
-				int images22[] = new int[colors22.size()];
-				for (int i = 0; i < colors22.size(); i++) {
-					images22[i] = ((ColorDrawable) colors22.get(i)
-							.getBackground()).getColor();
-				}
-				int images23[] = new int[colors23.size()];
-				for (int i = 0; i < colors23.size(); i++) {
-					images23[i] = ((ColorDrawable) colors23.get(i)
-							.getBackground()).getColor();
-				}
+				
+//				String[] times1 = new String[texts1.size()];
+//				for (int i = 0; i < texts1.size(); i++) {
+//					times1[i] = texts1.get(i).getText().toString();
+//				}
+//				String[] times2 = new String[texts2.size()];
+//				for (int i = 0; i < texts2.size(); i++) {
+//					times2[i] = texts2.get(i).getText().toString();
+//				}
+//				String[] days = new String[texts3.size()];
+//				for (int i = 0; i < texts3.size(); i++) {
+//					days[i] = texts3.get(i).getText().toString();
+//				}
+//				int images11[] = new int[colors11.size()];
+//				for (int i = 0; i < colors11.size(); i++) {
+//					images11[i] = ((ColorDrawable) colors11.get(i)
+//							.getBackground()).getColor();
+//				}
+//				int images12[] = new int[colors12.size()];
+//				for (int i = 0; i < colors12.size(); i++) {
+//					images12[i] = ((ColorDrawable) colors12.get(i)
+//							.getBackground()).getColor();
+//				}
+//				int images13[] = new int[colors13.size()];
+//				for (int i = 0; i < colors13.size(); i++) {
+//					images13[i] = ((ColorDrawable) colors13.get(i)
+//							.getBackground()).getColor();
+//				}
+//				int images21[] = new int[colors21.size()];
+//				for (int i = 0; i < colors21.size(); i++) {
+//					images21[i] = ((ColorDrawable) colors21.get(i)
+//							.getBackground()).getColor();
+//				}
+//				int images22[] = new int[colors22.size()];
+//				for (int i = 0; i < colors22.size(); i++) {
+//					images22[i] = ((ColorDrawable) colors22.get(i)
+//							.getBackground()).getColor();
+//				}
+//				int images23[] = new int[colors23.size()];
+//				for (int i = 0; i < colors23.size(); i++) {
+//					images23[i] = ((ColorDrawable) colors23.get(i)
+//							.getBackground()).getColor();
+//				}
 				boolean[] longClickeds = new boolean[isLongClickeds.size()];
 				for (int i = 0; i < isLongClickeds.size(); i++) {
 
 					longClickeds[i] = isLongClickeds.get(i).booleanValue();
 				}
+//				Intent intent = new Intent();
+//				intent.putExtra(Constants.TIMES1, times1);
+//				intent.putExtra(Constants.TIMES2, times2);
+//				intent.putExtra(Constants.DAYS, days);
+//				intent.putExtra(Constants.COLORS11, images11);
+//				intent.putExtra(Constants.COLORS12, images12);
+//				intent.putExtra(Constants.COLORS13, images13);
+//				intent.putExtra(Constants.COLORS21, images21);
+//				intent.putExtra(Constants.COLORS22, images22);
+//				intent.putExtra(Constants.COLORS23, images23);
+//				intent.putExtra(Constants.ISLONGCLICKEDS, longClickeds);
+//				setResult(RESULT_OK, intent);
+//				finish();
+				
 				Intent intent = new Intent();
-				intent.putExtra(Constants.TIMES1, times1);
-				intent.putExtra(Constants.TIMES2, times2);
-				intent.putExtra(Constants.DAYS, days);
-				intent.putExtra(Constants.COLORS11, images11);
-				intent.putExtra(Constants.COLORS12, images12);
-				intent.putExtra(Constants.COLORS13, images13);
-				intent.putExtra(Constants.COLORS21, images21);
-				intent.putExtra(Constants.COLORS22, images22);
-				intent.putExtra(Constants.COLORS23, images23);
+				intent.putParcelableArrayListExtra("days1", days1);
+				intent.putParcelableArrayListExtra("days2", days2);
 				intent.putExtra(Constants.ISLONGCLICKEDS, longClickeds);
 				setResult(RESULT_OK, intent);
 				finish();
