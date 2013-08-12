@@ -1,4 +1,4 @@
-package com.WeiGu.androidwheel;
+package com.sportsfire.exposure.androidwheel;
 
 /**
  * Color的Bean

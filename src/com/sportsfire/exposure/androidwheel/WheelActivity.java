@@ -1,10 +1,10 @@
-package com.WeiGu.androidwheel;
+package com.sportsfire.exposure.androidwheel;
 
-import com.WeiGu.SporysFireExposure.R;
-import com.WeiGu.widget.ArrayWheelAdapter;
-import com.WeiGu.widget.OnWheelChangedListener;
-import com.WeiGu.widget.OnWheelScrollListener;
-import com.WeiGu.widget.WheelView;
+import com.sportsfire.exposure.R;
+import com.sportsfire.exposure.widget.ArrayWheelAdapter;
+import com.sportsfire.exposure.widget.OnWheelChangedListener;
+import com.sportsfire.exposure.widget.OnWheelScrollListener;
+import com.sportsfire.exposure.widget.WheelView;
 
 import android.app.Activity;
 import android.content.Intent;

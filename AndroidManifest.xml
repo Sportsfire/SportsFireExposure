@@ -51,6 +51,9 @@
             android:label="@string/title_activity_main" >
         </activity>
         <activity
+            android:name="com.sportsfire.exposure.androidwheel.TeamMainActivity" >
+        </activity>
+        <activity
             android:name="com.sportsfire.exposure.androidwheel.InputTeam"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />

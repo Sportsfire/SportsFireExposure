@@ -1,9 +1,9 @@
-package com.WeiGu.androidwheel;
+package com.sportsfire.exposure.androidwheel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.WeiGu.SporysFireExposure.R;
+import com.sportsfire.exposure.R;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -53,7 +53,7 @@ public class PlayerMainActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.player_layout);
+		setContentView(R.layout.inputplayer);
 
 		myApp = (MyApp) getApplication();
 

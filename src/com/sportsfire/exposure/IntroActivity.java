@@ -1,9 +1,9 @@
-package com.WeiGu.SportsFireExposure;
+package com.sportsfire.exposure;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.WeiGu.SporysFireExposure.R;
+import com.sportsfire.exposure.R;
 
 import android.app.Activity;
 import android.content.Intent;

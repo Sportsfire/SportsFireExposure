@@ -1,4 +1,4 @@
-package com.WeiGu.androidwheel;
+package com.sportsfire.exposure.androidwheel;
 
 import android.app.Application;
 

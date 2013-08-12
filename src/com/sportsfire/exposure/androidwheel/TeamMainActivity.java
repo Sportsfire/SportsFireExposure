@@ -1,9 +1,9 @@
-package com.WeiGu.androidwheel;
+package com.sportsfire.exposure.androidwheel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.WeiGu.SporysFireExposure.R;
+import com.sportsfire.exposure.R;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -50,7 +50,7 @@ public class TeamMainActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.team_layout);
+		setContentView(R.layout.inputteam);
 
 		myApp = (MyApp) getApplication();
 
