@@ -7,6 +7,7 @@ import com.WeiGu.SporysFireExposure.R;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -44,6 +45,7 @@ public class PlayerMainActivity extends Activity implements OnClickListener {
 	private List<ImageView> colors21 = new ArrayList<ImageView>();
 	private List<ImageView> colors22 = new ArrayList<ImageView>();
 	private List<ImageView> colors23 = new ArrayList<ImageView>();
+	private List<Boolean> isLongClickeds = new ArrayList<Boolean>();
 
 	private Spinner mWeekSpinner, mPlayerSpinner;
 
@@ -117,6 +119,8 @@ public class PlayerMainActivity extends Activity implements OnClickListener {
 							.findViewById(item_ids[j]).findViewById(
 									R.id.tv_time);
 					texts1.add(tv_time);
+					
+					isLongClickeds.add(false);
 
 					ImageView iv1 = (ImageView) findViewById(layout_ids[i])
 							.findViewById(item_ids[j]).findViewById(
@@ -344,6 +348,8 @@ public class PlayerMainActivity extends Activity implements OnClickListener {
 		boolean[] longClickeds = data
 				.getBooleanArrayExtra(Constants.ISLONGCLICKEDS);
 		for (int i = k; i < k + longClickeds.length; i++) {
+			
+			isLongClickeds.set(i, longClickeds[i-k]);
 
 			if (longClickeds[i - k]) {
 				layouts.get(i).setVisibility(View.VISIBLE);
@@ -367,18 +373,158 @@ public class PlayerMainActivity extends Activity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.layout1:
 			Intent intent1 = new Intent(this, PlayerViewActivity.class);
+			ArrayList<PlayerDayBean> days11 = new ArrayList<PlayerDayBean>();
+			ArrayList<PlayerDayBean> days21 = new ArrayList<PlayerDayBean>();
+			
+			for (int i = 0; i < Constants.SIZE; i++) {
+				PlayerDayBean day = new PlayerDayBean();
+				day.setColor1(((ColorDrawable) colors11.get(i)
+						.getBackground()).getColor());
+				day.setColor2(((ColorDrawable) colors12.get(i)
+						.getBackground()).getColor());
+				day.setColor3(((ColorDrawable) colors13.get(i)
+						.getBackground()).getColor());
+				day.setTime(texts1.get(i).getText().toString());
+				days11.add(day);
+			}
+			
+			for (int i = 0; i < Constants.SIZE; i++) {
+				PlayerDayBean day = new PlayerDayBean();
+				day.setWeekday(texts3.get(i).getText().toString());
+				day.setColor1(((ColorDrawable) colors21.get(i)
+						.getBackground()).getColor());
+				day.setColor2(((ColorDrawable) colors22.get(i)
+						.getBackground()).getColor());
+				day.setColor3(((ColorDrawable) colors23.get(i)
+						.getBackground()).getColor());
+				day.setTime(texts2.get(i).getText().toString());
+				days21.add(day);
+			}
+			boolean[] longClickeds1 = new boolean[Constants.SIZE];
+			for (int i = 0; i < Constants.SIZE; i++) {
+
+				longClickeds1[i] = isLongClickeds.get(i).booleanValue();
+			}
+			intent1.putExtra(Constants.ISLONGCLICKEDS, longClickeds1);
+			intent1.putParcelableArrayListExtra("days1", days11);
+			intent1.putParcelableArrayListExtra("days2", days21);
 			startActivityForResult(intent1, REQUESTCODE1);
 			break;
 		case R.id.layout2:
 			Intent intent2 = new Intent(this, PlayerViewActivity.class);
+			ArrayList<PlayerDayBean> days12 = new ArrayList<PlayerDayBean>();
+			ArrayList<PlayerDayBean> days22 = new ArrayList<PlayerDayBean>();
+			
+			for (int i = 7; i < Constants.SIZE+7; i++) {
+				PlayerDayBean day = new PlayerDayBean();
+				day.setColor1(((ColorDrawable) colors11.get(i)
+						.getBackground()).getColor());
+				day.setColor2(((ColorDrawable) colors12.get(i)
+						.getBackground()).getColor());
+				day.setColor3(((ColorDrawable) colors13.get(i)
+						.getBackground()).getColor());
+				day.setTime(texts1.get(i).getText().toString());
+				days12.add(day);
+			}
+			
+			for (int i = 7; i < Constants.SIZE+7; i++) {
+				PlayerDayBean day = new PlayerDayBean();
+				day.setWeekday(texts3.get(i).getText().toString());
+				day.setColor1(((ColorDrawable) colors21.get(i)
+						.getBackground()).getColor());
+				day.setColor2(((ColorDrawable) colors22.get(i)
+						.getBackground()).getColor());
+				day.setColor3(((ColorDrawable) colors23.get(i)
+						.getBackground()).getColor());
+				day.setTime(texts2.get(i).getText().toString());
+				days22.add(day);
+			}
+			boolean[] longClickeds2 = new boolean[Constants.SIZE];
+			for (int i = 7; i < Constants.SIZE+7; i++) {
+
+				longClickeds2[i-7] = isLongClickeds.get(i).booleanValue();
+			}
+			intent2.putExtra(Constants.ISLONGCLICKEDS, longClickeds2);
+			intent2.putParcelableArrayListExtra("days1", days12);
+			intent2.putParcelableArrayListExtra("days2", days22);
 			startActivityForResult(intent2, REQUESTCODE2);
 			break;
 		case R.id.layout3:
 			Intent intent3 = new Intent(this, PlayerViewActivity.class);
+			ArrayList<PlayerDayBean> days13 = new ArrayList<PlayerDayBean>();
+			ArrayList<PlayerDayBean> days23 = new ArrayList<PlayerDayBean>();
+			
+			for (int i = 14; i < Constants.SIZE+14; i++) {
+				PlayerDayBean day = new PlayerDayBean();
+				day.setColor1(((ColorDrawable) colors11.get(i)
+						.getBackground()).getColor());
+				day.setColor2(((ColorDrawable) colors12.get(i)
+						.getBackground()).getColor());
+				day.setColor3(((ColorDrawable) colors13.get(i)
+						.getBackground()).getColor());
+				day.setTime(texts1.get(i).getText().toString());
+				days13.add(day);
+			}
+			
+			for (int i = 14; i < Constants.SIZE+14; i++) {
+				PlayerDayBean day = new PlayerDayBean();
+				day.setWeekday(texts3.get(i).getText().toString());
+				day.setColor1(((ColorDrawable) colors21.get(i)
+						.getBackground()).getColor());
+				day.setColor2(((ColorDrawable) colors22.get(i)
+						.getBackground()).getColor());
+				day.setColor3(((ColorDrawable) colors23.get(i)
+						.getBackground()).getColor());
+				day.setTime(texts2.get(i).getText().toString());
+				days23.add(day);
+			}
+			boolean[] longClickeds3 = new boolean[Constants.SIZE];
+			for (int i = 14; i < Constants.SIZE+14; i++) {
+
+				longClickeds3[i-14] = isLongClickeds.get(i).booleanValue();
+			}
+			intent3.putExtra(Constants.ISLONGCLICKEDS, longClickeds3);
+			intent3.putParcelableArrayListExtra("days1", days13);
+			intent3.putParcelableArrayListExtra("days2", days23);
 			startActivityForResult(intent3, REQUESTCODE3);
 			break;
 		case R.id.layout4:
 			Intent intent4 = new Intent(this, PlayerViewActivity.class);
+			ArrayList<PlayerDayBean> days14 = new ArrayList<PlayerDayBean>();
+			ArrayList<PlayerDayBean> days24 = new ArrayList<PlayerDayBean>();
+			
+			for (int i = 21; i < Constants.SIZE+21; i++) {
+				PlayerDayBean day = new PlayerDayBean();
+				day.setColor1(((ColorDrawable) colors11.get(i)
+						.getBackground()).getColor());
+				day.setColor2(((ColorDrawable) colors12.get(i)
+						.getBackground()).getColor());
+				day.setColor3(((ColorDrawable) colors13.get(i)
+						.getBackground()).getColor());
+				day.setTime(texts1.get(i).getText().toString());
+				days14.add(day);
+			}
+			
+			for (int i = 21; i < Constants.SIZE+21; i++) {
+				PlayerDayBean day = new PlayerDayBean();
+				day.setWeekday(texts3.get(i).getText().toString());
+				day.setColor1(((ColorDrawable) colors21.get(i)
+						.getBackground()).getColor());
+				day.setColor2(((ColorDrawable) colors22.get(i)
+						.getBackground()).getColor());
+				day.setColor3(((ColorDrawable) colors23.get(i)
+						.getBackground()).getColor());
+				day.setTime(texts2.get(i).getText().toString());
+				days24.add(day);
+			}
+			boolean[] longClickeds4 = new boolean[Constants.SIZE];
+			for (int i = 21; i < Constants.SIZE+21; i++) {
+
+				longClickeds4[i-21] = isLongClickeds.get(i).booleanValue();
+			}
+			intent4.putExtra(Constants.ISLONGCLICKEDS, longClickeds4);
+			intent4.putParcelableArrayListExtra("days1", days14);
+			intent4.putParcelableArrayListExtra("days2", days24);
 			startActivityForResult(intent4, REQUESTCODE4);
 			break;
 

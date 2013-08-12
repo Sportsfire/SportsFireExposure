@@ -55,6 +55,42 @@ public class PlayerViewActivity extends Activity implements OnClickListener,
 		setContentView(R.layout.player_view_layout);
 
 		initItems();
+		
+		ArrayList<PlayerDayBean> days1 = getIntent()
+				.getParcelableArrayListExtra("days1");
+		ArrayList<PlayerDayBean> days2 = getIntent()
+				.getParcelableArrayListExtra("days2");
+		
+		for (int i = 0; i <  Constants.SIZE; i++) {
+			PlayerDayBean day = days1.get(i);
+			colors11.get(i).setBackgroundColor(day.getColor1());
+			colors12.get(i).setBackgroundColor(day.getColor2());
+			colors13.get(i).setBackgroundColor(day.getColor3());
+			texts1.get(i).setText(day.getTime());
+		}
+
+		for (int i = 0; i < Constants.SIZE; i++) {
+			PlayerDayBean day = days2.get(i);
+			texts3.get(i).setText(day.getWeekday());
+			colors21.get(i).setBackgroundColor(day.getColor1());
+			colors22.get(i).setBackgroundColor(day.getColor2());
+			colors23.get(i).setBackgroundColor(day.getColor3());
+			texts2.get(i).setText(day.getTime());
+		}
+		
+		boolean[] longClickeds = getIntent()
+				.getBooleanArrayExtra(Constants.ISLONGCLICKEDS);
+		for (int i = 0; i < longClickeds.length; i++) {
+			
+			isLongClickeds.set(i, longClickeds[i]);
+			
+			if (longClickeds[i]) {
+				layouts.get(i).setVisibility(View.VISIBLE);
+			} else {
+				layouts.get(i).setVisibility(View.GONE);
+			}
+
+		}
 
 		Button btn_ok = (Button) findViewById(R.id.btn_allok);
 		btn_ok.setOnClickListener(new View.OnClickListener() {
