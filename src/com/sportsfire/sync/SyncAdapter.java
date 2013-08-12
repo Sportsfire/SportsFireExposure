@@ -40,6 +40,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SyncResult;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -70,7 +71,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 	private static final String SYNC_SCREEN_MARKER_KEY = "com.sportsfire.sync.screen marker";
 
 	private HttpEntity getParamsEntity() {
-		final AccountManager am = AccountManager.get(context);
+		final AccountManager am = mAccountManager;
 		String authToken;
 		try {
 			authToken = am.blockingGetAuthToken(account, AUTHTOKEN_TYPE, true);
@@ -126,7 +127,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 	public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider,
 			SyncResult syncResult) {
 		this.account = account;
-		loadSquadsAndPlayers();
+		if (ContentResolver.getIsSyncable(account, Provider.AUTHORITY)>0){
+			loadSquadsAndPlayers();
+		}
 		//updateScreening(account);
 
 	}
