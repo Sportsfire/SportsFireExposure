@@ -1,5 +1,7 @@
 package com.sportsfire.exposure.db;
 
+import com.sportsfire.db.PlayerTable;
+
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -9,6 +11,7 @@ public class PlayerSessionsTable {
 	// Players Table Keys
 	public static final String KEY_ID = "_id"; // Primary key
 	public static final String KEY_DATE = "date";
+	public static final String KEY_NUMBER = "number";
 	public static final String KEY_PRE_TRAINING = "pretraining";
 	public static final String KEY_POST_TRAINING = "posttraining";
 	public static final String KEY_DURATION = "duration";
@@ -18,10 +21,13 @@ public class PlayerSessionsTable {
 	public static final String KEY_SEASON_ID = "seasonid";
 
 	public static void onCreate(SQLiteDatabase db) {
-		String createValuesTable = "CREATE TABLE " + TABLE_NAME + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-				+ KEY_DATE + " TEXT NOT NULL," + KEY_PRE_TRAINING + " INTEGER," + KEY_POST_TRAINING + " INTEGER,"
-				+ KEY_DURATION + " INTEGER," + KEY_TYPE + " TEXT," + KEY_SESSION + " TEXT," + KEY_PLAYER_ID
-				+ " INTEGER NOT NULL," + KEY_SEASON_ID + " INTEGER NOT NULL" + ")";
+		String createValuesTable = "CREATE TABLE " + TABLE_NAME + "(" 
+				+ KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+				+ KEY_DATE + " TEXT NOT NULL," + KEY_PRE_TRAINING + " INTEGER," 
+				+ KEY_POST_TRAINING + " INTEGER," + KEY_DURATION + " INTEGER," 
+				+ KEY_TYPE + " TEXT," + KEY_NUMBER + " INTEGER,"
+				+ KEY_SESSION + " TEXT," 
+				+ KEY_PLAYER_ID + " INTEGER NOT NULL," + KEY_SEASON_ID + " INTEGER NOT NULL" + ")";
 
 		db.execSQL(createValuesTable);
 	}

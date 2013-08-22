@@ -16,11 +16,10 @@ import android.widget.AdapterView.OnItemClickListener;
 public class ColorGridActivity extends Activity {
 	private GridView gridView;
 
-	private final String TITLES[] = { "#BD7803", "#049FF1", "#72CFD7",
+	public final String TITLES[] = { "#BD7803", "#049FF1", "#72CFD7",
 			"#A2B700", "#FF981F", "#3F813F", "#BEC0C2", "#F0F0F0" };
-	private final int COLORS[] = { 0xFFBD7803, 0xFF049FF1, 0xFF72CFD7,
+	public final int COLORS[] = { 0xFFBD7803, 0xFF049FF1, 0xFF72CFD7,
 			0xFFA2B700, 0xFFFF981F, 0xFF3F813F, 0xFFBEC0C2, 0xFFF0F0F0 };
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

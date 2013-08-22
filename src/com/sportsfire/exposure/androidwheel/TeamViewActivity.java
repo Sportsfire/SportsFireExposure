@@ -21,16 +21,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class TeamViewActivity extends Activity implements OnClickListener,
-		OnLongClickListener {
+public class TeamViewActivity extends Activity implements OnClickListener, OnLongClickListener {
 
-	private String[] strs = { "S\n7", "M\n8", "T\n9", "W\n10", "Th\n11",
-			"F\n12", "S\n13" };
-	private int item_ids[] = { R.id.item1, R.id.item2,
-			R.id.item3, R.id.item4, R.id.item5, R.id.item6,
-			R.id.item7, R.id.item8, R.id.item9,
-			R.id.item10, R.id.item11, R.id.item12,
-			R.id.item13, R.id.item14 };
+	public static final String ARG_DATES = "argumentDates";
+	private int item_ids[] = { R.id.item1, R.id.item2, R.id.item3, R.id.item4, R.id.item5, R.id.item6, R.id.item7,
+			R.id.item8, R.id.item9, R.id.item10, R.id.item11, R.id.item12, R.id.item13, R.id.item14 };
 	private View clickedView;
 	private List<ImageView> colors1 = new ArrayList<ImageView>();
 	private List<ImageView> colors2 = new ArrayList<ImageView>();
@@ -39,16 +34,17 @@ public class TeamViewActivity extends Activity implements OnClickListener,
 	private List<TextView> texts2 = new ArrayList<TextView>();
 	private List<TextView> texts3 = new ArrayList<TextView>();
 	private List<Boolean> isLongClickeds = new ArrayList<Boolean>();
-
+	private List<String> dateStrings;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.team_view_layout);
-
+		dateStrings = getIntent().getStringArrayListExtra(ARG_DATES);
 		initItems();
-		
+
 		ArrayList<TeamDayBean> days1 = getIntent().getParcelableArrayListExtra("days1");
 		ArrayList<TeamDayBean> days2 = getIntent().getParcelableArrayListExtra("days2");
 		for (int i = 0; i < Constants.SIZE; i++) {
@@ -63,12 +59,11 @@ public class TeamViewActivity extends Activity implements OnClickListener,
 			colors2.get(i).setBackgroundColor(day.getColor());
 			texts2.get(i).setText(day.getTime());
 		}
-		boolean[] longClickeds = getIntent()
-				.getBooleanArrayExtra(Constants.ISLONGCLICKEDS);
+		boolean[] longClickeds = getIntent().getBooleanArrayExtra(Constants.ISLONGCLICKEDS);
 		for (int i = 0; i < longClickeds.length; i++) {
-			
+
 			isLongClickeds.set(i, longClickeds[i]);
-			
+
 			if (longClickeds[i]) {
 				layouts.get(i).setVisibility(View.VISIBLE);
 			} else {
@@ -85,74 +80,35 @@ public class TeamViewActivity extends Activity implements OnClickListener,
 				// TODO Auto-generated method stub
 				ArrayList<TeamDayBean> days1 = new ArrayList<TeamDayBean>();
 				ArrayList<TeamDayBean> days2 = new ArrayList<TeamDayBean>();
-				
+
 				for (int i = 0; i < Constants.SIZE; i++) {
 					TeamDayBean day = new TeamDayBean();
-					day.setColor(((ColorDrawable) colors1.get(i)
-							.getBackground()).getColor());
+					day.setColor(((ColorDrawable) colors1.get(i).getBackground()).getColor());
 					day.setTime(texts1.get(i).getText().toString());
 					days1.add(day);
 				}
-				
+
 				for (int i = 0; i < Constants.SIZE; i++) {
 					TeamDayBean day = new TeamDayBean();
 					day.setWd(texts3.get(i).getText().toString());
-					day.setColor(((ColorDrawable) colors2.get(i)
-							.getBackground()).getColor());
+					day.setColor(((ColorDrawable) colors2.get(i).getBackground()).getColor());
 					day.setTime(texts2.get(i).getText().toString());
 					days2.add(day);
 				}
-				
+
 				boolean[] longClickeds = new boolean[isLongClickeds.size()];
 				for (int i = 0; i < isLongClickeds.size(); i++) {
 
 					longClickeds[i] = isLongClickeds.get(i).booleanValue();
 				}
-				
+
 				Intent intent = new Intent();
 				intent.putParcelableArrayListExtra("days1", days1);
 				intent.putParcelableArrayListExtra("days2", days2);
 				intent.putExtra(Constants.ISLONGCLICKEDS, longClickeds);
 				setResult(RESULT_OK, intent);
 				finish();
-				
-//				String[] times1 = new String[texts1.size()];
-//				for (int i = 0; i < texts1.size(); i++) {
-//					times1[i] = texts1.get(i).getText().toString();
-//				}
-//				String[] times2 = new String[texts2.size()];
-//				for (int i = 0; i < texts2.size(); i++) {
-//					times2[i] = texts2.get(i).getText().toString();
-//				}
-//				String[] days = new String[texts3.size()];
-//				for (int i = 0; i < texts3.size(); i++) {
-//					days[i] = texts3.get(i).getText().toString();
-//				}
-//				int images1[] = new int[colors1.size()];
-//				for (int i = 0; i < colors1.size(); i++) {
-//					images1[i] = ((ColorDrawable) colors1.get(i)
-//							.getBackground()).getColor();
-//				}
-//				int images2[] = new int[colors2.size()];
-//				for (int i = 0; i < colors2.size(); i++) {
-//					images2[i] = ((ColorDrawable) colors2.get(i)
-//							.getBackground()).getColor();
-//				}
-//				boolean[] longClickeds = new boolean[isLongClickeds.size()];
-//				for (int i = 0; i < isLongClickeds.size(); i++) {
-//
-//					longClickeds[i] = isLongClickeds.get(i).booleanValue();
-//				}
-//				Intent intent = new Intent();
-//				intent.putExtra(Constants.TIMES1, times1);
-//				intent.putExtra(Constants.TIMES2, times2);
-//				intent.putExtra(Constants.DAYS, days);
-//				intent.putExtra(Constants.COLORS11, images1);
-//				intent.putExtra(Constants.COLORS21, images2);
-//				intent.putExtra(Constants.ISLONGCLICKEDS, longClickeds);
-//				setResult(RESULT_OK, intent);
-//				finish();
-				
+
 			}
 		});
 
@@ -163,40 +119,34 @@ public class TeamViewActivity extends Activity implements OnClickListener,
 
 			if (j % 2 == 0) {
 
-				ImageView iv = (ImageView) findViewById(item_ids[j])
-						.findViewById(R.id.iv_color);
+				ImageView iv = (ImageView) findViewById(item_ids[j]).findViewById(R.id.iv_color);
 				iv.setOnClickListener(this);
 				iv.setOnLongClickListener(this);
 				this.registerForContextMenu(iv);
 				colors1.add(iv);
 				isLongClickeds.add(false);
 
-				TextView tv_day = (TextView) findViewById(item_ids[j])
-						.findViewById(R.id.tv_weekday);
-				tv_day.setText(strs[j / 2]);
+				TextView tv_day = (TextView) findViewById(item_ids[j]).findViewById(R.id.tv_weekday);
+				tv_day.setText(dateStrings.get(j/2));
 
-				TextView tv_time = (TextView) findViewById(item_ids[j])
-						.findViewById(R.id.tv_time);
+				TextView tv_time = (TextView) findViewById(item_ids[j]).findViewById(R.id.tv_time);
 				tv_time.setOnClickListener(this);
 				texts1.add(tv_time);
 
 			} else {
 
-				TextView tv_day = (TextView) findViewById(item_ids[j])
-						.findViewById(R.id.tv_weekday);
+				TextView tv_day = (TextView) findViewById(item_ids[j]).findViewById(R.id.tv_weekday);
 				tv_day.setText(" \n ");
 				texts3.add(tv_day);
 				LinearLayout layout = (LinearLayout) findViewById(item_ids[j]);
 				layouts.add(layout);
 
-				ImageView iv = (ImageView) findViewById(item_ids[j])
-						.findViewById(R.id.iv_color);
+				ImageView iv = (ImageView) findViewById(item_ids[j]).findViewById(R.id.iv_color);
 				iv.setOnClickListener(this);
 				iv.setBackgroundColor(0xFF8A2BE2);
 				colors2.add(iv);
 
-				TextView tv_time = (TextView) findViewById(item_ids[j])
-						.findViewById(R.id.tv_time);
+				TextView tv_time = (TextView) findViewById(item_ids[j]).findViewById(R.id.tv_time);
 				tv_time.setOnClickListener(this);
 				texts2.add(tv_time);
 
@@ -241,9 +191,11 @@ public class TeamViewActivity extends Activity implements OnClickListener,
 
 			for (int m = 0; m < colors1.size(); m++) {
 				if (m + colors1.size() * 2 == requestCode) {
-
 					int value = data.getIntExtra(Constants.COLOR, 0x0000000);
 					colors1.get(m).setBackgroundColor(value);
+					if (texts3.get(m).getText().charAt(0) == 'D'){
+						colors2.get(m).setBackgroundColor(value);
+					}
 				}
 			}
 
@@ -252,6 +204,9 @@ public class TeamViewActivity extends Activity implements OnClickListener,
 
 					int value = data.getIntExtra(Constants.COLOR, 0x0000000);
 					colors2.get(n).setBackgroundColor(value);
+					if (texts3.get(n).getText().charAt(0) == 'D'){
+						colors1.get(n).setBackgroundColor(value);
+					}
 				}
 			}
 		}
@@ -269,24 +224,19 @@ public class TeamViewActivity extends Activity implements OnClickListener,
 
 		for (int j = 0; j < texts2.size(); j++) {
 			if (arg0.equals(texts2.get(j))) {
-				startActivityForResult(new Intent(this, WheelActivity.class), j
-						+ texts2.size());
+				startActivityForResult(new Intent(this, WheelActivity.class), j + texts2.size());
 			}
 		}
 
 		for (int m = 0; m < colors1.size(); m++) {
 			if (arg0.equals(colors1.get(m))) {
-				startActivityForResult(
-						new Intent(this, ColorGridActivity.class),
-						m + colors1.size() * 2);
+				startActivityForResult(new Intent(this, ColorGridActivity.class), m + colors1.size() * 2);
 			}
 		}
 
 		for (int n = 0; n < colors2.size(); n++) {
 			if (arg0.equals(colors2.get(n))) {
-				startActivityForResult(
-						new Intent(this, ColorGridActivity.class),
-						n + colors2.size() * 3);
+				startActivityForResult(new Intent(this, ColorGridActivity.class), n + colors2.size() * 3);
 			}
 		}
 	}
@@ -301,11 +251,11 @@ public class TeamViewActivity extends Activity implements OnClickListener,
 	}
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 
 		menu.add(0, 1, 0, "SPLIT");
 		menu.add(0, 2, 0, "DOUBLE");
+		menu.add(0, 3, 0, "SINGLE");
 	}
 
 	@Override
@@ -315,17 +265,33 @@ public class TeamViewActivity extends Activity implements OnClickListener,
 		switch (item.getItemId()) {
 		case 1:
 			str = "S\nP";
+			for (int i = 0; i < colors1.size(); i++) {
+				if (clickedView.equals(colors1.get(i))) {
+					layouts.get(i).setVisibility(View.VISIBLE);
+					colors2.get(i).setBackground(colors1.get(i).getBackground());
+					isLongClickeds.set(i, true);
+					texts3.get(i).setText(str);
+				}
+			}
 			break;
 		case 2:
 			str = "D\nO";
+			for (int i = 0; i < colors1.size(); i++) {
+				if (clickedView.equals(colors1.get(i))) {
+					layouts.get(i).setVisibility(View.VISIBLE);
+					colors2.get(i).setBackground(colors1.get(i).getBackground());
+					isLongClickeds.set(i, true);
+					texts3.get(i).setText(str);
+				}
+			}
 			break;
-		}
-
-		for (int i = 0; i < colors1.size(); i++) {
-			if (clickedView.equals(colors1.get(i))) {
-				layouts.get(i).setVisibility(View.VISIBLE);
-				isLongClickeds.set(i, true);
-				texts3.get(i).setText(str);
+		case 3:
+			for (int i = 0; i < colors1.size(); i++) {
+				if (clickedView.equals(colors1.get(i))) {
+					isLongClickeds.set(i, false);
+					layouts.get(i).setVisibility(View.GONE);
+					return true;
+				}
 			}
 		}
 

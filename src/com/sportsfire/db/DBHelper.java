@@ -1,4 +1,8 @@
-package com.sportsfire.exposure.db;
+package com.sportsfire.db;
+
+import com.sportsfire.exposure.db.PlayerSessionsTable;
+import com.sportsfire.exposure.db.SquadSessionsTable;
+import com.sportsfire.exposure.db.UpdatesTable;
 
 import android.content.ContentValues;
 import android.content.Context;

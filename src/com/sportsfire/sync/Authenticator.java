@@ -14,9 +14,9 @@
  * the License.
  */
 
-package com.sportsfire.exposure.sync;
+package com.sportsfire.sync;
 
-import static com.sportsfire.exposure.sync.Constants.server;
+import static com.sportsfire.sync.Constants.server;
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorResponse;

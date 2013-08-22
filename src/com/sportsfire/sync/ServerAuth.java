@@ -1,4 +1,4 @@
-package com.sportsfire.exposure.sync;
+package com.sportsfire.sync;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

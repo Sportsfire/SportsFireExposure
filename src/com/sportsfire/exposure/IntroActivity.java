@@ -4,8 +4,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.sportsfire.exposure.R;
+import com.sportsfire.exposure.sync.ExposureProvider;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,6 +29,10 @@ public class IntroActivity extends Activity{
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		setContentView(R.layout.intro_activity);
+		Account[] s = AccountManager.get(this).getAccountsByType(com.sportsfire.sync.Constants.ACCOUNT_TYPE);
+		if (s.length > 0){
+			ContentResolver.requestSync(s[0], ExposureProvider.AUTHORITY, new Bundle());
+		}
 		Timer timer = new Timer();
 		timer.schedule(new TimerTask()
 		{
@@ -34,7 +42,7 @@ public class IntroActivity extends Activity{
 				IntroActivity.this.startActivity(myIntent);
 				finish();
 			}
-		}, 2000);
+		}, 1500);
 	}
 
 	@Override
