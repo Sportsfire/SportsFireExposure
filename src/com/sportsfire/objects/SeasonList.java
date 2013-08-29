@@ -1,9 +1,8 @@
-package com.sportsfire.exposure.objects;
+package com.sportsfire.objects;
 import java.util.ArrayList;
 
 import com.sportsfire.db.SeasonTable;
-import com.sportsfire.exposure.sync.ExposureProvider;
-import com.sportsfire.sync.Provider;
+import com.sportsfire.unique.Provider;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -15,11 +14,11 @@ public class SeasonList {
     public SeasonList(Context context){
     	
     	String[] projection = { SeasonTable.KEY_SEASON_NAME, SeasonTable.KEY_SEASON_ID, SeasonTable.KEY_START_DATE};
-		Cursor cursor = context.getContentResolver().query(ExposureProvider.CONTENT_URI_SEASONS, projection,
+		Cursor cursor = context.getContentResolver().query(Provider.CONTENT_URI_SEASONS, projection,
 				null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
-				seasonList.add(new Season(cursor.getString(0), cursor.getString(1), context));
+				seasonList.add(new Season(cursor.getString(0), cursor.getString(1),cursor.getString(2)));
 				seasonNameList.add(cursor.getString(0));
 			} while (cursor.moveToNext());
 		}

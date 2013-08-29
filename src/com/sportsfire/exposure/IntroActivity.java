@@ -4,7 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.sportsfire.exposure.R;
-import com.sportsfire.exposure.sync.ExposureProvider;
+import com.sportsfire.unique.Provider;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -31,7 +31,7 @@ public class IntroActivity extends Activity{
 		setContentView(R.layout.intro_activity);
 		Account[] s = AccountManager.get(this).getAccountsByType(com.sportsfire.sync.Constants.ACCOUNT_TYPE);
 		if (s.length > 0){
-			ContentResolver.requestSync(s[0], ExposureProvider.AUTHORITY, new Bundle());
+			ContentResolver.requestSync(s[0], Provider.AUTHORITY, new Bundle());
 		}
 		Timer timer = new Timer();
 		timer.schedule(new TimerTask()

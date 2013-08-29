@@ -1,10 +1,9 @@
-package com.sportsfire.exposure.objects;
+package com.sportsfire.objects;
 
 import java.util.ArrayList;
 
 import com.sportsfire.db.SquadTable;
-import com.sportsfire.exposure.sync.ExposureProvider;
-import com.sportsfire.sync.Provider;
+import com.sportsfire.unique.Provider;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -15,7 +14,7 @@ public class SquadList {
 
 	public SquadList(Context context) {
 		String[] projection = { SquadTable.KEY_SQUAD_NAME, SquadTable.KEY_SQUAD_ID };
-		Cursor cursor = context.getContentResolver().query(ExposureProvider.CONTENT_URI_SQUADS, projection,
+		Cursor cursor = context.getContentResolver().query(Provider.CONTENT_URI_SQUADS, projection,
 				null, null, null);
 		if (cursor.moveToFirst()) {
 			do {

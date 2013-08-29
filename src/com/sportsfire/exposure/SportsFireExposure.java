@@ -10,10 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.sportsfire.exposure.androidwheel.TeamMainActivity;
-import com.sportsfire.exposure.objects.Season;
-import com.sportsfire.exposure.objects.SeasonList;
-import com.sportsfire.exposure.objects.Squad;
-import com.sportsfire.exposure.objects.SquadList;
+import com.sportsfire.objects.Season;
+import com.sportsfire.objects.SeasonList;
+import com.sportsfire.objects.Squad;
+import com.sportsfire.objects.SquadList;
 
 public class SportsFireExposure extends Activity {
 	private Spinner spinner1;

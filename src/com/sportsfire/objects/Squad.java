@@ -1,9 +1,8 @@
-package com.sportsfire.exposure.objects;
+package com.sportsfire.objects;
 import java.util.ArrayList;
 
 import com.sportsfire.db.PlayerTable;
-import com.sportsfire.exposure.sync.ExposureProvider;
-import com.sportsfire.sync.Provider;
+import com.sportsfire.unique.Provider;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -15,13 +14,12 @@ public class Squad implements Parcelable{
     private ArrayList<String> playerNameList = new ArrayList<String>();
     private String name;
     private String id;
-    private Context context;
+
     public Squad(String _name, String _id,Context context){
-        this.context= context;
         name = _name;
         id = _id;
         String[] projection = { PlayerTable.KEY_FIRST_NAME, PlayerTable.KEY_SURNAME, PlayerTable.KEY_PLAYER_ID };
-		Cursor cursor = context.getContentResolver().query(ExposureProvider.CONTENT_URI_PLAYERS, projection, PlayerTable.KEY_SQUAD_ID + " = '" + _id + "'", null, null);
+		Cursor cursor = context.getContentResolver().query(Provider.CONTENT_URI_PLAYERS, projection, PlayerTable.KEY_SQUAD_ID + " = '" + _id + "'", null, null);
 		if (cursor.moveToFirst()) {
             do {
             	Player pl = new Player(cursor.getString(0),cursor.getString(1),cursor.getString(2),context);

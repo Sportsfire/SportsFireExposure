@@ -1,4 +1,4 @@
-package com.sportsfire.exposure.androidwheel;
+package com.sportsfire.exposure.colour;
 
 /**
  * Color的Bean

@@ -1,4 +1,4 @@
-package com.sportsfire.exposure.objects;
+package com.sportsfire.exposure.androidwheel;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ import com.sportsfire.db.SeasonTable;
 import com.sportsfire.exposure.db.PlayerSessionsTable;
 import com.sportsfire.exposure.db.SquadSessionsTable;
 import com.sportsfire.exposure.db.UpdatesTable;
-import com.sportsfire.exposure.sync.ExposureProvider;
+import com.sportsfire.unique.Provider;
 
 public class ExposureData {
 
@@ -36,7 +36,7 @@ public class ExposureData {
 	public String getSeasonStart() {
 		String[] projection = { SeasonTable.KEY_START_DATE };
 		final String where = SeasonTable.KEY_SEASON_ID + " = '" + seasonID + "'";
-		cursor = content.query(ExposureProvider.CONTENT_URI_SEASONS, projection, where, null, null);
+		cursor = content.query(Provider.CONTENT_URI_SEASONS, projection, where, null, null);
 		if (cursor.getCount() == 0) {
 			cursor.close();
 			return null;
@@ -54,7 +54,7 @@ public class ExposureData {
 				+ PlayerSessionsTable.KEY_SEASON_ID + " = '" + seasonID + "'";
 
 		String[] projection = { "*" };
-		cursor = content.query(ExposureProvider.CONTENT_URI_PLAYER_SESSIONS, projection, where, null,
+		cursor = content.query(Provider.CONTENT_URI_PLAYER_SESSIONS, projection, where, null,
 				PlayerSessionsTable.KEY_NUMBER);
 		if (cursor.getCount() == 0) {
 			cursor.close();
@@ -80,7 +80,7 @@ public class ExposureData {
 		ArrayList<ArrayList<String>> exposure = new ArrayList<ArrayList<String>>();
 
 		String[] projection = { "*" };
-		cursor = content.query(ExposureProvider.CONTENT_URI_EXPOSURE_UPDATES, projection, null, null,
+		cursor = content.query(Provider.CONTENT_URI_EXPOSURE_UPDATES, projection, null, null,
 				null);
 		if (cursor.getCount() == 0) {
 			cursor.close();
@@ -117,7 +117,7 @@ public class ExposureData {
 				+ " = '" + number + "' and " + PlayerSessionsTable.KEY_DATE + " = '" + date + "'";
 
 		String[] projection = { PlayerSessionsTable.KEY_ID };
-		cursor = content.query(ExposureProvider.CONTENT_URI_PLAYER_SESSIONS, projection, where, null, null);
+		cursor = content.query(Provider.CONTENT_URI_PLAYER_SESSIONS, projection, where, null, null);
 
 		ContentValues values = new ContentValues();
 
@@ -131,13 +131,13 @@ public class ExposureData {
 			values.put(PlayerSessionsTable.KEY_POST_TRAINING, preTraining);
 			values.put(PlayerSessionsTable.KEY_PRE_TRAINING, postTraining);
 			values.put(PlayerSessionsTable.KEY_DATE, date);
-			Uri uri = content.insert(ExposureProvider.CONTENT_URI_PLAYER_SESSIONS, values);
+			Uri uri = content.insert(Provider.CONTENT_URI_PLAYER_SESSIONS, values);
 			String insertID = uri.getLastPathSegment();
 
 			values.clear();
 			values.put(UpdatesTable.KEY_VALUE_ID, Integer.parseInt(insertID));
 
-			content.insert(ExposureProvider.CONTENT_URI_EXPOSURE_UPDATES, values);
+			content.insert(Provider.CONTENT_URI_EXPOSURE_UPDATES, values);
 
 		} else {
 			values.put(PlayerSessionsTable.KEY_SESSION, value);
@@ -146,11 +146,11 @@ public class ExposureData {
 			values.put(PlayerSessionsTable.KEY_POST_TRAINING, preTraining);
 			values.put(PlayerSessionsTable.KEY_PRE_TRAINING, postTraining);
 			cursor.moveToFirst();
-			content.update(ExposureProvider.CONTENT_URI_PLAYER_SESSIONS, values, where, null);
+			content.update(Provider.CONTENT_URI_PLAYER_SESSIONS, values, where, null);
 			values.clear();
 			values.put(UpdatesTable.KEY_VALUE_ID, cursor.getInt(0));
 			values.put(UpdatesTable.KEY_TABLE_NAME, PlayerSessionsTable.TABLE_NAME);
-			content.insert(ExposureProvider.CONTENT_URI_EXPOSURE_UPDATES, values);
+			content.insert(Provider.CONTENT_URI_EXPOSURE_UPDATES, values);
 
 		}
 		cursor.close();
@@ -166,7 +166,7 @@ public class ExposureData {
 
 		String[] projection = { PlayerSessionsTable.KEY_ID };
 
-		cursor = content.query(ExposureProvider.CONTENT_URI_PLAYER_SESSIONS, projection, where, null, null);
+		cursor = content.query(Provider.CONTENT_URI_PLAYER_SESSIONS, projection, where, null, null);
 
 		if (cursor.getCount() == 0) {
 			cursor.close();
@@ -175,8 +175,8 @@ public class ExposureData {
 			Log.i("DELETE", playerID);
 			final String where2 = UpdatesTable.KEY_TABLE_NAME + " = '" + PlayerSessionsTable.TABLE_NAME + "' and "
 					+ UpdatesTable.KEY_VALUE_ID + " = '" + cursor.getInt(0) + "'";
-			content.delete(ExposureProvider.CONTENT_URI_EXPOSURE_UPDATES, where2, null);
-			content.delete(ExposureProvider.CONTENT_URI_PLAYER_SESSIONS, where, null);
+			content.delete(Provider.CONTENT_URI_EXPOSURE_UPDATES, where2, null);
+			content.delete(Provider.CONTENT_URI_PLAYER_SESSIONS, where, null);
 			cursor.close();
 		}
 	}
@@ -192,7 +192,7 @@ public class ExposureData {
 		String[] projection = {PlayerSessionsTable.KEY_PRE_TRAINING, PlayerSessionsTable.KEY_SESSION,
 				PlayerSessionsTable.KEY_POST_TRAINING, PlayerSessionsTable.KEY_DURATION, PlayerSessionsTable.KEY_TYPE };
 
-		cursor = content.query(ExposureProvider.CONTENT_URI_PLAYER_SESSIONS, projection, where, null,
+		cursor = content.query(Provider.CONTENT_URI_PLAYER_SESSIONS, projection, where, null,
 				PlayerSessionsTable.KEY_NUMBER);
 
 		if (cursor.getCount() == 0) {
@@ -222,7 +222,7 @@ public class ExposureData {
 	public String getDateInSeason(Integer weekNum, Integer dayNum) {
 		Integer count = ((7 * weekNum) + dayNum);
 		String[] projection = { "date('" + getSeasonStart() + "','+" + count + " days')" };
-		cursor = content.query(ExposureProvider.CONTENT_URI_SQUADS, projection, null, null, null);
+		cursor = content.query(Provider.CONTENT_URI_SQUADS, projection, null, null, null);
 		if (cursor.getCount() == 0) {
 			cursor.close();
 			return null;
@@ -242,7 +242,7 @@ public class ExposureData {
 		for (int day = 0; day < 7; day++) {
 			projection[day] = "strftime('%d','" + start + "','+" + (pos + day) + " days')";
 		}
-		cursor = content.query(ExposureProvider.CONTENT_URI_SQUADS, projection, null, null, null);
+		cursor = content.query(Provider.CONTENT_URI_SQUADS, projection, null, null, null);
 		if (cursor.getCount() == 0) {
 			cursor.close();
 			return null;
@@ -262,7 +262,7 @@ public class ExposureData {
 				+ SquadSessionsTable.KEY_SEASON_ID + " = '" + seasonID + "'";
 		String[] projection = { "*" };
 
-		cursor = content.query(ExposureProvider.CONTENT_URI_SQUAD_SESSIONS, projection, where, null,
+		cursor = content.query(Provider.CONTENT_URI_SQUAD_SESSIONS, projection, where, null,
 				SquadSessionsTable.KEY_DATE);
 
 		if (cursor.getCount() == 0) {
@@ -303,7 +303,7 @@ public class ExposureData {
 				+ " = '" + number + "' and " + SquadSessionsTable.KEY_DATE + " = '" + date + "'";
 
 		String[] projection = { SquadSessionsTable.KEY_ID };
-		cursor = content.query(ExposureProvider.CONTENT_URI_SQUAD_SESSIONS, projection, where, null, null);
+		cursor = content.query(Provider.CONTENT_URI_SQUAD_SESSIONS, projection, where, null, null);
 
 		ContentValues values = new ContentValues();
 		Log.i("TEST3", where);
@@ -317,23 +317,23 @@ public class ExposureData {
 			values.put(SquadSessionsTable.KEY_SESSION, value);
 			values.put(SquadSessionsTable.KEY_DATE, date);
 			Log.i("INFO", values.toString());
-			Uri uri = content.insert(ExposureProvider.CONTENT_URI_SQUAD_SESSIONS, values);
+			Uri uri = content.insert(Provider.CONTENT_URI_SQUAD_SESSIONS, values);
 			String insertID = uri.getLastPathSegment();
 			values.clear();
 			values.put(UpdatesTable.KEY_VALUE_ID, Integer.parseInt(insertID));
 			values.put(UpdatesTable.KEY_TABLE_NAME, SquadSessionsTable.TABLE_NAME);
-			content.insert(ExposureProvider.CONTENT_URI_EXPOSURE_UPDATES, values);
+			content.insert(Provider.CONTENT_URI_EXPOSURE_UPDATES, values);
 		} else {
 			Log.i("UPDATE", duration);
 			values.put(SquadSessionsTable.KEY_TYPE, type);
 			values.put(SquadSessionsTable.KEY_DURATION, duration);
 			values.put(SquadSessionsTable.KEY_SESSION, value);
 			cursor.moveToFirst();
-			content.update(ExposureProvider.CONTENT_URI_SQUAD_SESSIONS, values, where, null);
+			content.update(Provider.CONTENT_URI_SQUAD_SESSIONS, values, where, null);
 			values.clear();
 			values.put(UpdatesTable.KEY_VALUE_ID, cursor.getInt(0));
 			values.put(UpdatesTable.KEY_TABLE_NAME, SquadSessionsTable.TABLE_NAME);
-			content.insert(ExposureProvider.CONTENT_URI_EXPOSURE_UPDATES, values);
+			content.insert(Provider.CONTENT_URI_EXPOSURE_UPDATES, values);
 		}
 		cursor.close();
 		return true;
@@ -347,7 +347,7 @@ public class ExposureData {
 
 		String[] projection = { SquadSessionsTable.KEY_ID };
 
-		cursor = content.query(ExposureProvider.CONTENT_URI_SQUAD_SESSIONS, projection, where, null, null);
+		cursor = content.query(Provider.CONTENT_URI_SQUAD_SESSIONS, projection, where, null, null);
 
 		if (cursor.getCount() == 0) {
 			cursor.close();
@@ -356,8 +356,8 @@ public class ExposureData {
 			Log.i("DELETE", squadID);
 			final String where2 = UpdatesTable.KEY_TABLE_NAME + " = '" + SquadSessionsTable.TABLE_NAME + "' and "
 					+ UpdatesTable.KEY_VALUE_ID + " = '" + cursor.getInt(0) + "'";
-			content.delete(ExposureProvider.CONTENT_URI_EXPOSURE_UPDATES, where2, null);
-			content.delete(ExposureProvider.CONTENT_URI_SQUAD_SESSIONS, where, null);
+			content.delete(Provider.CONTENT_URI_EXPOSURE_UPDATES, where2, null);
+			content.delete(Provider.CONTENT_URI_SQUAD_SESSIONS, where, null);
 			cursor.close();
 		}
 	}
@@ -372,7 +372,7 @@ public class ExposureData {
 		String[] projection = { SquadSessionsTable.KEY_SESSION, SquadSessionsTable.KEY_DURATION,
 				SquadSessionsTable.KEY_TYPE };
 
-		cursor = content.query(ExposureProvider.CONTENT_URI_SQUAD_SESSIONS, projection, where, null,
+		cursor = content.query(Provider.CONTENT_URI_SQUAD_SESSIONS, projection, where, null,
 				SquadSessionsTable.KEY_NUMBER);
 
 		if (cursor.getCount() == 0) {

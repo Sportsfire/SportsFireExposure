@@ -1,5 +1,8 @@
-package com.sportsfire.db;
+package com.sportsfire.unique;
 
+import com.sportsfire.db.PlayerTable;
+import com.sportsfire.db.SeasonTable;
+import com.sportsfire.db.SquadTable;
 import com.sportsfire.exposure.db.PlayerSessionsTable;
 import com.sportsfire.exposure.db.SquadSessionsTable;
 import com.sportsfire.exposure.db.UpdatesTable;

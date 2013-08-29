@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sportsfire.exposure.R;
+import com.sportsfire.exposure.colour.ColorGridActivity;
 
 import android.app.Activity;
 import android.content.Intent;

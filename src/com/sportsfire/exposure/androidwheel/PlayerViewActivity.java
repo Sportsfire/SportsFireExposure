@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sportsfire.exposure.R;
+import com.sportsfire.exposure.colour.ColorGridActivity;
 
 public class PlayerViewActivity extends Activity implements OnClickListener, OnLongClickListener {
 	public static final String ARG_DATES = "argumentDates";

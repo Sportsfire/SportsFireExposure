@@ -3,15 +3,10 @@ package com.sportsfire.exposure.androidwheel;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.R.color;
-import android.R.drawable;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,9 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.sportsfire.exposure.R;
-import com.sportsfire.exposure.objects.ExposureData;
-import com.sportsfire.exposure.objects.Player;
-import com.sportsfire.exposure.objects.Squad;
+import com.sportsfire.objects.Squad;
 
 public class TeamMainActivity extends Activity implements OnClickListener {
 
@@ -82,12 +75,9 @@ public class TeamMainActivity extends Activity implements OnClickListener {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				if (spinnerInit == true) {
-					// myApp.setSpinnerPosition(arg2);
-					// mSpinner.setSelection(arg2);
 					Intent intent = getIntent();
 					intent.putExtra("WEEK", arg2);
 					finish();
-					// recreate();
 					startActivity(intent);
 				}
 				spinnerInit = true;
@@ -116,33 +106,41 @@ public class TeamMainActivity extends Activity implements OnClickListener {
 
 				ImageView iv = (ImageView) findViewById(layout_ids[i]).findViewById(item_ids[j]).findViewById(
 						R.id.iv_color);
-				iv.setBackgroundColor(0);
 				LinearLayout layout = (LinearLayout) findViewById(layout_ids[i]).findViewById(item_ids[j + 1]);
-				layouts.add(layout);
 
 				TextView tv_day = (TextView) findViewById(layout_ids[i]).findViewById(item_ids[j + 1]).findViewById(
 						R.id.tv_weekday);
-				tv_day.setText(" \n ");
+
 				ImageView iv2 = (ImageView) findViewById(layout_ids[i]).findViewById(item_ids[j + 1]).findViewById(
 						R.id.iv_color);
 				TextView tv_time2 = (TextView) findViewById(layout_ids[i]).findViewById(item_ids[j + 1]).findViewById(
 						R.id.tv_time);
+				layouts.add(layout);
+				tv_day.setText(" \n ");
+				iv.setBackgroundColor(0);
+				layout.setVisibility(View.GONE);
 				Boolean showTwo = false;
 				if (exposure != null) {
-					tv_time.setText("  " + exposure.get(0).get(1) + "  ");
-					iv.setBackgroundColor(Integer.valueOf(exposure.get(0).get(0)));
-					if (exposure.size() > 1) {
-						showTwo = true;
-						layout.setVisibility(View.VISIBLE);
-						if (exposure.get(1).get(2).startsWith("S")){
-							tv_day.setText("S\nP");
-							tv_time2.setText("  " + exposure.get(1).get(1) + "  ");
-							iv2.setBackgroundColor(Integer.valueOf(exposure.get(0).get(0)));
-						} else {
-							tv_day.setText("D\nO");
-							tv_time2.setText("  " + exposure.get(1).get(1) + "  ");
-							iv2.setBackground(iv.getBackground());
+					try {
+						tv_time.setText("  " + exposure.get(0).get(1) + "  ");
+						iv.setBackgroundColor(Integer.valueOf(exposure.get(0).get(0)));
+						if (exposure.size() > 1) {
+							showTwo = true;
+							layout.setVisibility(View.VISIBLE);
+							if (exposure.get(1).get(2).startsWith("S")) {
+								tv_day.setText("S\nP");
+								tv_time2.setText("  " + exposure.get(1).get(1) + "  ");
+								iv2.setBackgroundColor(Integer.valueOf(exposure.get(0).get(0)));
+							} else {
+								tv_day.setText("D\nO");
+								tv_time2.setText("  " + exposure.get(1).get(1) + "  ");
+								iv2.setBackground(iv.getBackground());
+							}
 						}
+					} catch (NumberFormatException e) {
+						iv.setBackgroundColor(0);
+						iv2.setBackgroundColor(0);
+						e.printStackTrace();
 					}
 				}
 				isLongClickeds.add(showTwo);
@@ -216,7 +214,7 @@ public class TeamMainActivity extends Activity implements OnClickListener {
 				} else {
 					TextView tv = (TextView) findViewById(layout_ids[i]).findViewById(item_ids[j]).findViewById(
 							R.id.tv_weekday);
-					//tv.setText(" \n ");
+					// tv.setText(" \n ");
 				}
 
 			}
@@ -229,186 +227,57 @@ public class TeamMainActivity extends Activity implements OnClickListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		int weekNum = (mSpinner.getSelectedItemPosition() * 4);
 		if (resultCode == RESULT_OK) {
 
-			ArrayList<TeamDayBean> days1 = data.getParcelableArrayListExtra("days1");
-			ArrayList<TeamDayBean> days2 = data.getParcelableArrayListExtra("days2");
-			boolean[] longClickeds = data.getBooleanArrayExtra(Constants.ISLONGCLICKEDS);
 			if (requestCode == REQUESTCODE1) {
-				
-				for (int i = 0; i < longClickeds.length; i++) {
 
-					isLongClickeds.set(i, longClickeds[i]);
-
-					if (longClickeds[i]) {
-						layouts.get(i).setVisibility(View.VISIBLE);
-					} else {
-						layouts.get(i).setVisibility(View.GONE);
-					}
-
-				}
-				for (int i = 0; i < Constants.SIZE; i++) {
-					TeamDayBean day1 = days1.get(i);
-					TeamDayBean day2 = days2.get(i);
-					if (!longClickeds[i]) {
-						dataGetter.setSquadExposure(squad.getID(), "Single", 1, day1.getTime(), weekNum, i,
-								String.valueOf(day1.getColor()));
-						dataGetter.deleteSquadExposure(squad.getID(), 2, weekNum, i);
-					} else if (longClickeds[i] && (day2.getWd().contains("S"))) {
-						dataGetter.setSquadExposure(squad.getID(), "Split",1, day1.getTime(), weekNum, i,
-								String.valueOf(day1.getColor()));
-						dataGetter.setSquadExposure(squad.getID(), "Split",2, day2.getTime(), weekNum, i,
-								String.valueOf(day2.getColor()));
-					} else {
-						dataGetter.setSquadExposure(squad.getID(), "Double",1, day1.getTime(), weekNum, i,
-								String.valueOf(day1.getColor()));
-						dataGetter.setSquadExposure(squad.getID(), "Double",2, day2.getTime(), weekNum, i,
-								String.valueOf(day2.getColor()));
-					}
-				}
-				for (int i = 0; i < Constants.SIZE; i++) {
-					TeamDayBean day = days1.get(i);
-					colors1.get(i).setBackgroundColor(day.getColor());
-					texts1.get(i).setText(day.getTime());
-					TeamDayBean day2 = days2.get(i);
-					texts3.get(i).setText(day2.getWd());
-					colors2.get(i).setBackgroundColor(day2.getColor());
-					texts2.get(i).setText(day2.getTime());
-				}
-
+				saveChanges(data, 0);
 
 			} else if (requestCode == REQUESTCODE2) {
 
-				for (int i = 7; i < 7 + Constants.SIZE; i++) {
-					TeamDayBean day = days1.get(i - 7);
-					colors1.get(i).setBackgroundColor(day.getColor());
-					texts1.get(i).setText(day.getTime());
-				}
-
-				for (int i = 7; i < 7 + Constants.SIZE; i++) {
-					TeamDayBean day = days2.get(i - 7);
-					texts3.get(i).setText(day.getWd());
-					colors2.get(i).setBackgroundColor(day.getColor());
-					texts2.get(i).setText(day.getTime());
-				}
-
-				for (int i = 7; i < 7 + longClickeds.length; i++) {
-
-					isLongClickeds.set(i, longClickeds[i - 7]);
-
-					if (longClickeds[i - 7]) {
-						layouts.get(i).setVisibility(View.VISIBLE);
-					} else {
-						layouts.get(i).setVisibility(View.GONE);
-					}
-					TeamDayBean day1 = days1.get(i-7);
-					TeamDayBean day2 = days2.get(i-7);
-					if (!longClickeds[i-7]) {
-						dataGetter.setSquadExposure(squad.getID(), "Single", 1, day1.getTime(), weekNum, i,
-								String.valueOf(day1.getColor()));
-						dataGetter.deleteSquadExposure(squad.getID(), 2, weekNum, i);
-					} else if (longClickeds[i-7] && (day2.getWd().contains("S"))) {
-						dataGetter.setSquadExposure(squad.getID(), "Split",1, day1.getTime(), weekNum, i,
-								String.valueOf(day1.getColor()));
-						dataGetter.setSquadExposure(squad.getID(), "Split",2, day2.getTime(), weekNum, i,
-								String.valueOf(day2.getColor()));
-					} else {
-						dataGetter.setSquadExposure(squad.getID(), "Double",1, day1.getTime(), weekNum, i,
-								String.valueOf(day1.getColor()));
-						dataGetter.setSquadExposure(squad.getID(), "Double",2, day2.getTime(), weekNum, i,
-								String.valueOf(day2.getColor()));
-					}
-				}
+				saveChanges(data, 7);
 
 			} else if (requestCode == REQUESTCODE3) {
 
-				for (int i = 14; i < 14 + Constants.SIZE; i++) {
-					TeamDayBean day = days1.get(i - 14);
-					colors1.get(i).setBackgroundColor(day.getColor());
-					texts1.get(i).setText(day.getTime());
-				}
-
-				for (int i = 14; i < 14 + Constants.SIZE; i++) {
-					TeamDayBean day = days2.get(i - 14);
-					texts3.get(i).setText(day.getWd());
-					colors2.get(i).setBackgroundColor(day.getColor());
-					texts2.get(i).setText(day.getTime());
-				}
-
-				for (int i = 14; i < 14 + longClickeds.length; i++) {
-
-					isLongClickeds.set(i, longClickeds[i - 14]);
-
-					if (longClickeds[i - 14]) {
-						layouts.get(i).setVisibility(View.VISIBLE);
-					} else {
-						layouts.get(i).setVisibility(View.GONE);
-					}
-					TeamDayBean day1 = days1.get(i - 14);
-					TeamDayBean day2 = days2.get(i - 14);
-					if (!longClickeds[i-14]) {
-						dataGetter.setSquadExposure(squad.getID(), "Single", 1, day1.getTime(), weekNum, i,
-								String.valueOf(day1.getColor()));
-						dataGetter.deleteSquadExposure(squad.getID(), 2, weekNum, i);
-					} else if (longClickeds[i-14] && (day2.getWd().contains("S"))) {
-						dataGetter.setSquadExposure(squad.getID(), "Split",1, day1.getTime(), weekNum, i,
-								String.valueOf(day1.getColor()));
-						dataGetter.setSquadExposure(squad.getID(), "Split",2, day2.getTime(), weekNum, i,
-								String.valueOf(day2.getColor()));
-					} else {
-						dataGetter.setSquadExposure(squad.getID(), "Double",1, day1.getTime(), weekNum, i,
-								String.valueOf(day1.getColor()));
-						dataGetter.setSquadExposure(squad.getID(), "Double",2, day2.getTime(), weekNum, i,
-								String.valueOf(day2.getColor()));
-					}
-				}
+				saveChanges(data, 14);
 
 			} else if (requestCode == REQUESTCODE4) {
 
-				for (int i = 21; i < 21 + Constants.SIZE; i++) {
-					TeamDayBean day = days1.get(i - 21);
-					colors1.get(i).setBackgroundColor(day.getColor());
-					texts1.get(i).setText(day.getTime());
+				saveChanges(data, 21);
+
+			}
+		}
+	}
+
+	private void saveChanges(Intent data, int k) {
+		int weekNum = (mSpinner.getSelectedItemPosition() * 4);
+		ArrayList<TeamDayBean> days1 = data.getParcelableArrayListExtra("days1");
+		ArrayList<TeamDayBean> days2 = data.getParcelableArrayListExtra("days2");
+		boolean[] longClickeds = data.getBooleanArrayExtra(Constants.ISLONGCLICKEDS);
+		for (int i = k; i < k + Constants.SIZE; i++) {
+			TeamDayBean day1 = days1.get(i - k);
+			TeamDayBean day2 = days2.get(i - k);
+			colors1.get(i).setBackgroundColor(day1.getColor());
+			texts1.get(i).setText(day1.getTime());
+			texts3.get(i).setText(day2.getWd());
+			colors2.get(i).setBackgroundColor(day2.getColor());
+			texts2.get(i).setText(day2.getTime());
+			isLongClickeds.set(i, longClickeds[i - k]);
+			String value1 = String.valueOf(day1.getColor());
+			String value2 = String.valueOf(day2.getColor());
+			if (!longClickeds[i - k]) {
+				layouts.get(i).setVisibility(View.GONE);
+				dataGetter.setSquadExposure(squad.getID(), "Single", 1, day1.getTime(), weekNum, i, value1);
+				dataGetter.deleteSquadExposure(squad.getID(), 2, weekNum, i);
+			} else {
+				layouts.get(i).setVisibility(View.VISIBLE);
+				if (day2.getWd().contains("S")) {
+					dataGetter.setSquadExposure(squad.getID(), "Split", 1, day1.getTime(), weekNum, i, value1);
+					dataGetter.setSquadExposure(squad.getID(), "Split", 2, day2.getTime(), weekNum, i, value2);
+				} else {
+					dataGetter.setSquadExposure(squad.getID(), "Double", 1, day1.getTime(), weekNum, i, value1);
+					dataGetter.setSquadExposure(squad.getID(), "Double", 2, day2.getTime(), weekNum, i, value1);
 				}
-
-				for (int i = 21; i < 21 + Constants.SIZE; i++) {
-					TeamDayBean day = days2.get(i - 21);
-					texts3.get(i).setText(day.getWd());
-					colors2.get(i).setBackgroundColor(day.getColor());
-					texts2.get(i).setText(day.getTime());
-				}
-
-				for (int i = 21; i < 21 + longClickeds.length; i++) {
-
-					isLongClickeds.set(i, longClickeds[i - 21]);
-					if (longClickeds[i - 21]) {
-						layouts.get(i).setVisibility(View.VISIBLE);
-					} else {
-						layouts.get(i).setVisibility(View.GONE);
-					}
-					TeamDayBean day1 = days1.get(i-21);
-					TeamDayBean day2 = days2.get(i-21);
-					String value1 = String.valueOf(day1.getColor());
-					String value2 = String.valueOf(day2.getColor());
-					final String type;
-					if (!longClickeds[i-21]) {
-						type = "Single";
-						dataGetter.setSquadExposure(squad.getID(), type, 1, day1.getTime(), weekNum, i,value1);
-						dataGetter.deleteSquadExposure(squad.getID(), 2, weekNum, i);
-					} else if (longClickeds[i-21] && (day2.getWd().contains("S"))) {
-						dataGetter.setSquadExposure(squad.getID(), "Split",1, day1.getTime(), weekNum, i,
-								value1);
-						dataGetter.setSquadExposure(squad.getID(), "Split",2, day2.getTime(), weekNum, i,
-								value2);
-					} else {
-						dataGetter.setSquadExposure(squad.getID(), "Double",1, day1.getTime(), weekNum, i,
-								value1);
-						dataGetter.setSquadExposure(squad.getID(), "Double",2, day2.getTime(), weekNum, i,
-								value2);
-					}
-				}
-
 			}
 		}
 	}

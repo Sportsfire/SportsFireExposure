@@ -1,4 +1,4 @@
-package com.sportsfire.sync;
+package com.sportsfire.unique;
 
 import static com.sportsfire.sync.Constants.AUTHTOKEN_TYPE;
 
@@ -52,11 +52,10 @@ import android.util.SparseArray;
 import com.sportsfire.db.PlayerTable;
 import com.sportsfire.db.SeasonTable;
 import com.sportsfire.db.SquadTable;
+import com.sportsfire.exposure.androidwheel.ExposureData;
 import com.sportsfire.exposure.db.PlayerSessionsTable;
 import com.sportsfire.exposure.db.SquadSessionsTable;
 import com.sportsfire.exposure.db.UpdatesTable;
-import com.sportsfire.exposure.objects.ExposureData;
-import com.sportsfire.exposure.sync.ExposureProvider;
 
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
 	private AccountManager mAccountManager;
@@ -79,10 +78,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 	private static final String SYNC_MARKER_KEY = "com.sportsfire.sync.marker";
 	private static final String SYNC_SQUADEXPOSURE_MARKER_KEY = "com.sportsfire.sync.squadexposure.marker";
 	private static final String SYNC_PLAYEREXPOSURE_MARKER_KEY = "com.sportsfire.sync.playerexposure.marker";
-
+	private String authToken;
 	private HttpEntity getParamsEntity() {
 		final AccountManager am = mAccountManager;
-		String authToken;
+		
 		try {
 			authToken = am.blockingGetAuthToken(account, AUTHTOKEN_TYPE, true);
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -137,9 +136,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 	public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider,
 			SyncResult syncResult) {
 		this.account = account;
-		if (!(ContentResolver.getIsSyncable(account, Provider.AUTHORITY) > 0)) {
-			loadSquadsAndPlayers();
-		}
+		loadSquadsAndPlayers();
 		updateSquadExposure();
 
 	}
@@ -150,28 +147,28 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 		LinkedList<ContentValues> seasons = loadSeasons();
 		LinkedList<ContentValues> players = loadPlayers();
 		if (squads != null && seasons != null && players != null) {
-			mContentResolver.delete(ExposureProvider.CONTENT_URI_PLAYERS, null, null);
-			mContentResolver.delete(ExposureProvider.CONTENT_URI_SQUADS, null, null);
-			mContentResolver.delete(ExposureProvider.CONTENT_URI_SEASONS, null, null);
+			mContentResolver.delete(Provider.CONTENT_URI_PLAYERS, null, null);
+			mContentResolver.delete(Provider.CONTENT_URI_SQUADS, null, null);
+			mContentResolver.delete(Provider.CONTENT_URI_SEASONS, null, null);
 			ListIterator<ContentValues> it = null;
 			if (squads != null) {
 				it = squads.listIterator();
 
 				while (it.hasNext()) {
-					mContentResolver.insert(ExposureProvider.CONTENT_URI_SQUADS, it.next());
+					mContentResolver.insert(Provider.CONTENT_URI_SQUADS, it.next());
 				}
 			}
 			if (seasons != null) {
 				it = seasons.listIterator();
 				while (it.hasNext()) {
-					mContentResolver.insert(ExposureProvider.CONTENT_URI_SEASONS, it.next());
+					mContentResolver.insert(Provider.CONTENT_URI_SEASONS, it.next());
 				}
 			}
 
 			if (players != null) {
 				it = players.listIterator();
 				while (it.hasNext()) {
-					mContentResolver.insert(ExposureProvider.CONTENT_URI_PLAYERS, it.next());
+					mContentResolver.insert(Provider.CONTENT_URI_PLAYERS, it.next());
 				}
 			}
 		}
@@ -267,8 +264,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 				}
 				return resultList;
 			} else if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_FORBIDDEN) {
-				mAccountManager.invalidateAuthToken(AUTHTOKEN_TYPE,
-						mAccountManager.blockingGetAuthToken(account, AUTHTOKEN_TYPE, true));
+				Log.i("HERE", authToken);
+				mAccountManager.invalidateAuthToken(AUTHTOKEN_TYPE,authToken);
 				loadSquadsAndPlayers();
 			}
 		} catch (Exception e) {
@@ -286,7 +283,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 			String[] innerprojection = { "*" };
 			final String where = UpdatesTable.KEY_TABLE_NAME + " = '" + SquadSessionsTable.TABLE_NAME + "'";
 			SparseArray<String> listOfIDs = new SparseArray<String>();
-			Cursor cursor = mContentResolver.query(ExposureProvider.CONTENT_URI_EXPOSURE_UPDATES, projection, where,
+			Cursor cursor = mContentResolver.query(Provider.CONTENT_URI_EXPOSURE_UPDATES, projection, where,
 					null, null);
 			if (cursor.moveToFirst()) {
 				do {
@@ -294,7 +291,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 						continue;
 					listOfIDs.put(cursor.getInt(0), "");
 
-					Cursor innercursor = mContentResolver.query(ExposureProvider.CONTENT_URI_SQUAD_SESSIONS,
+					Cursor innercursor = mContentResolver.query(Provider.CONTENT_URI_SQUAD_SESSIONS,
 							innerprojection, SquadSessionsTable.KEY_ID + " = '" + cursor.getInt(0) + "'", null, null);
 					innercursor.moveToFirst();
 					JSONObject jsonentry = new JSONObject();
@@ -353,7 +350,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 							values.getAsString(SquadSessionsTable.KEY_SESSION));
 
 				}
-				mContentResolver.delete(ExposureProvider.CONTENT_URI_EXPOSURE_UPDATES, where, null);
+				mContentResolver.delete(Provider.CONTENT_URI_EXPOSURE_UPDATES, where, null);
 				mAccountManager.setUserData(account, SYNC_SQUADEXPOSURE_MARKER_KEY,
 						(String) serverResponse.get("newsyncmarker"));
 
@@ -372,7 +369,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 			String[] innerprojection = { "*" };
 			final String where = UpdatesTable.KEY_TABLE_NAME + " = '" + PlayerSessionsTable.TABLE_NAME + "'";
 			SparseArray<String> listOfIDs = new SparseArray<String>();
-			Cursor cursor = mContentResolver.query(ExposureProvider.CONTENT_URI_EXPOSURE_UPDATES, projection, where,
+			Cursor cursor = mContentResolver.query(Provider.CONTENT_URI_EXPOSURE_UPDATES, projection, where,
 					null, null);
 			if (cursor.moveToFirst()) {
 				do {
@@ -380,7 +377,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 						continue;
 					listOfIDs.put(cursor.getInt(0), "");
 
-					Cursor innercursor = mContentResolver.query(ExposureProvider.CONTENT_URI_PLAYER_SESSIONS,
+					Cursor innercursor = mContentResolver.query(Provider.CONTENT_URI_PLAYER_SESSIONS,
 							innerprojection, PlayerSessionsTable.KEY_ID + " = '" + cursor.getInt(0) + "'", null, null);
 					innercursor.moveToFirst();
 					JSONObject jsonentry = new JSONObject();
@@ -438,7 +435,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 							values.getAsString(PlayerSessionsTable.KEY_POST_TRAINING));
 
 				}
-				mContentResolver.delete(ExposureProvider.CONTENT_URI_EXPOSURE_UPDATES, where, null);
+				mContentResolver.delete(Provider.CONTENT_URI_EXPOSURE_UPDATES, where, null);
 				mAccountManager.setUserData(account, SYNC_PLAYEREXPOSURE_MARKER_KEY,
 						(String) serverResponse.get("newsyncmarker"));
 

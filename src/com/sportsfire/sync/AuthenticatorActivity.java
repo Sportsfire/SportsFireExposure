@@ -17,7 +17,7 @@
 package com.sportsfire.sync;
 
 import com.sportsfire.exposure.R;
-import com.sportsfire.exposure.sync.ExposureProvider;
+import com.sportsfire.unique.Provider;
 
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
@@ -197,16 +197,17 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
 	private void finishLogin(String authToken) {
 		Log.i(TAG, "finishLogin()");
 		final Account account = new Account(mUsername, Constants.ACCOUNT_TYPE);
+		ContentResolver.setIsSyncable(account, Provider.AUTHORITY, 1);
 		if (mRequestNewAccount) {
 			mAccountManager.addAccountExplicitly(account, mPassword, null);
 			mAccountManager.setAuthToken(account, AUTHTOKEN_TYPE, authToken);
 			mAccountManager.setUserData(account, AccountManager.KEY_USERDATA, userData);
 			// Set contacts sync for this account.
-			ContentResolver.setSyncAutomatically(account, ExposureProvider.AUTHORITY, true);
+			ContentResolver.setSyncAutomatically(account, Provider.AUTHORITY, true);
 		} else {
 			mAccountManager.setPassword(account, mPassword);
 		}
-		ContentResolver.requestSync(account, ExposureProvider.AUTHORITY, new Bundle());
+		ContentResolver.requestSync(account, Provider.AUTHORITY, new Bundle());
 		final Intent intent = new Intent();
 		intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, mUsername);
 		intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, Constants.ACCOUNT_TYPE);

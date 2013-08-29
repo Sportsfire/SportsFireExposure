@@ -1,4 +1,4 @@
-package com.sportsfire.exposure.objects;
+package com.sportsfire.objects;
 
 import android.content.Context;
 import android.os.Parcel;

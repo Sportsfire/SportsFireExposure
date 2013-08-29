@@ -1,17 +1,16 @@
-package com.sportsfire.exposure.androidwheel;
-
-import com.sportsfire.exposure.R;
+package com.sportsfire.exposure.colour;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
+
+import com.sportsfire.exposure.R;
+import com.sportsfire.exposure.androidwheel.Constants;
 
 public class ColorGridActivity extends Activity {
 	private GridView gridView;

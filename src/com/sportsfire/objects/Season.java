@@ -1,4 +1,4 @@
-package com.sportsfire.exposure.objects;
+package com.sportsfire.objects;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -6,26 +6,23 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Season implements Parcelable{
-	private SquadList squadList;
     private ArrayList<String> weekList = new ArrayList<String>();
     private String name;
     private String id;
+    private String startDate;
     
-    public Season(String _name, String _id, Context context){
+    public Season(String _name, String _id, String _start){
         name = _name;
         id = _id;
-        //startDate = _start;
-        squadList = new SquadList(context);
+        startDate = _start;
         for (int i = 1; i <= 52; i++) {
 			weekList.add("Week " + Integer.toString(i));
 		}     
     }
+    
     public Season(Parcel in) {
 		readFromParcel(in);
 	}
-	public SquadList getSquadList(){
-        return squadList;
-    }
     
     public ArrayList<String> getWeeklist(){
         return weekList;
@@ -39,6 +36,9 @@ public class Season implements Parcelable{
         return id;
     }
 
+    public String getStartDate(){
+    	return startDate;
+    }
 	public int describeContents() {
 		// TODO Auto-generated method stub
 		return 0;
@@ -53,14 +53,17 @@ public class Season implements Parcelable{
 	            return new Season[size];  
 	        }  
 	};
+	
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(name);
 		dest.writeString(id);
-		
+		dest.writeString(startDate);
 	}
 	
 	public void readFromParcel(Parcel in){
-		
+		name = in.readString();
+		id = in.readString();
+		startDate = in.readString();
 	}
 }

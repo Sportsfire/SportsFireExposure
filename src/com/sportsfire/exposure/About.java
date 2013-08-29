@@ -2,7 +2,7 @@ package com.sportsfire.exposure;
 
 import com.sportsfire.exposure.R;
 import com.sportsfire.exposure.androidwheel.Constants;
-import com.sportsfire.exposure.sync.ExposureProvider;
+import com.sportsfire.unique.Provider;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;

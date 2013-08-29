@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sportsfire.exposure.R;
-import com.sportsfire.exposure.objects.ExposureData;
-import com.sportsfire.exposure.objects.Player;
-import com.sportsfire.exposure.objects.Squad;
+import com.sportsfire.objects.Player;
+import com.sportsfire.objects.Squad;
 
 import android.app.Activity;
 import android.content.Intent;
