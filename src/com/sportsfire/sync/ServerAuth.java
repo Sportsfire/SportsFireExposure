@@ -92,7 +92,7 @@ public class ServerAuth {
 		try {
 			final HttpResponse resp = new DefaultHttpClient().execute(new HttpGet(url));
 			final String response = EntityUtils.toString(resp.getEntity());
-			Log.e("response", response);
+			Log.e("expired_response", response);
 			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				final JSONObject serverResponse = new JSONObject(response);
 				final String status = serverResponse.getString("success");

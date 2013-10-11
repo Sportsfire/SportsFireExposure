@@ -108,7 +108,7 @@ public class Provider extends ContentProvider {
 			rowsAffected = sqldb.delete(UpdatesTable.TABLE_NAME, selection, selectionArgs);
 			break;
 		default:
-			throw new IllegalArgumentException("Unkown URI");
+			throw new IllegalArgumentException("Unknown URI");
 		}
 		getContext().getContentResolver().notifyChange(uri, null);
 		return rowsAffected;

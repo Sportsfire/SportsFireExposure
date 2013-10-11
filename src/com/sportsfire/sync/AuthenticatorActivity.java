@@ -18,7 +18,6 @@ package com.sportsfire.sync;
 
 import com.sportsfire.exposure.R;
 import com.sportsfire.unique.Provider;
-
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
@@ -204,6 +203,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
 			mAccountManager.setUserData(account, AccountManager.KEY_USERDATA, userData);
 			// Set contacts sync for this account.
 			ContentResolver.setSyncAutomatically(account, Provider.AUTHORITY, true);
+			
 		} else {
 			mAccountManager.setPassword(account, mPassword);
 		}

@@ -214,7 +214,6 @@ public class ExposureData {
 			}
 
 		}
-		Log.i("TEST", exposure.toString());
 		cursor.close();
 		return exposure;
 	}
@@ -306,9 +305,7 @@ public class ExposureData {
 		cursor = content.query(Provider.CONTENT_URI_SQUAD_SESSIONS, projection, where, null, null);
 
 		ContentValues values = new ContentValues();
-		Log.i("TEST3", where);
 		if (cursor.getCount() == 0) {
-			Log.i("NEW", type);
 			values.put(SquadSessionsTable.KEY_TYPE, type);
 			values.put(SquadSessionsTable.KEY_SQUAD_ID, squadID);
 			values.put(SquadSessionsTable.KEY_SEASON_ID, seasonID);
@@ -316,7 +313,7 @@ public class ExposureData {
 			values.put(SquadSessionsTable.KEY_NUMBER, number);
 			values.put(SquadSessionsTable.KEY_SESSION, value);
 			values.put(SquadSessionsTable.KEY_DATE, date);
-			Log.i("INFO", values.toString());
+			Log.i("NEW", values.toString());
 			Uri uri = content.insert(Provider.CONTENT_URI_SQUAD_SESSIONS, values);
 			String insertID = uri.getLastPathSegment();
 			values.clear();
@@ -324,10 +321,10 @@ public class ExposureData {
 			values.put(UpdatesTable.KEY_TABLE_NAME, SquadSessionsTable.TABLE_NAME);
 			content.insert(Provider.CONTENT_URI_EXPOSURE_UPDATES, values);
 		} else {
-			Log.i("UPDATE", duration);
 			values.put(SquadSessionsTable.KEY_TYPE, type);
 			values.put(SquadSessionsTable.KEY_DURATION, duration);
 			values.put(SquadSessionsTable.KEY_SESSION, value);
+			Log.i("UPDATE", values.toString());
 			cursor.moveToFirst();
 			content.update(Provider.CONTENT_URI_SQUAD_SESSIONS, values, where, null);
 			values.clear();
@@ -388,11 +385,8 @@ public class ExposureData {
 					exposure.add(data);
 				} catch (Exception e) {
 				}
-
 			}
-
 		}
-		Log.i("TEST", exposure.toString());
 		cursor.close();
 		return exposure;
 	}
